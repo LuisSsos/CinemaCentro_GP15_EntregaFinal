@@ -31,10 +31,6 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
     public VistaPelicula() {
         initComponents();
         
-        javax.swing.ButtonGroup grupoCartelera = new javax.swing.ButtonGroup();
-        grupoCartelera.add(rbDisponible);
-        grupoCartelera.add(rbNodisponible);
-        
         fechaSeleccionada.setMinSelectableDate(new java.util.GregorianCalendar(2000, Calendar.JANUARY, 1).getTime());
         fechaSeleccionada.setMaxSelectableDate(new java.util.Date());
 
@@ -68,6 +64,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
@@ -124,8 +121,10 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("En cartelera");
 
+        buttonGroup1.add(rbDisponible);
         rbDisponible.setText("Disponible");
 
+        buttonGroup1.add(rbNodisponible);
         rbNodisponible.setText("Fuera de cartelera");
 
         jtPeliculas.setModel(new javax.swing.table.DefaultTableModel(
@@ -216,7 +215,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rbNodisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(cbGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(329, 329, 329))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -287,7 +286,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
                     .addComponent(bttUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bttDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bttListar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(143, 143, 143))
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -527,6 +526,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
     private javax.swing.JButton bttDelete;
     private javax.swing.JButton bttListar;
     private javax.swing.JButton bttUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbGenero;
     private com.toedter.calendar.JDateChooser fechaSeleccionada;
     private javax.swing.JLabel jLabel1;
