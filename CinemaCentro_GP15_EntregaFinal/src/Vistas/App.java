@@ -29,8 +29,10 @@ public class App extends javax.swing.JFrame {
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jm_gestion = new javax.swing.JMenu();
-        jmi_gestion_asientos = new javax.swing.JMenuItem();
-        jm_venta = new javax.swing.JMenu();
+        jmi_gestion_peliculas = new javax.swing.JMenuItem();
+        jmi_gestion_funciones = new javax.swing.JMenuItem();
+        jmi_gestion_salas = new javax.swing.JMenuItem();
+        jm_ventas = new javax.swing.JMenu();
         jmi_venta_presencial = new javax.swing.JMenuItem();
         jmi_venta_online = new javax.swing.JMenuItem();
         jm_ticket = new javax.swing.JMenu();
@@ -52,22 +54,28 @@ public class App extends javax.swing.JFrame {
             .addGap(0, 677, Short.MAX_VALUE)
         );
 
-        jm_gestion.setText("Compradores");
+        jm_gestion.setText("Gestion");
 
-        jmi_gestion_asientos.setText("Compradores");
-        jm_gestion.add(jmi_gestion_asientos);
+        jmi_gestion_peliculas.setText("Peliculas");
+        jm_gestion.add(jmi_gestion_peliculas);
+
+        jmi_gestion_funciones.setText("Funciones");
+        jm_gestion.add(jmi_gestion_funciones);
+
+        jmi_gestion_salas.setText("Salas");
+        jm_gestion.add(jmi_gestion_salas);
 
         jMenuBar1.add(jm_gestion);
 
-        jm_venta.setText("Venta");
+        jm_ventas.setText("Ventas");
 
-        jmi_venta_presencial.setText("Venta Presencial");
-        jm_venta.add(jmi_venta_presencial);
+        jmi_venta_presencial.setText("Presencial");
+        jm_ventas.add(jmi_venta_presencial);
 
-        jmi_venta_online.setText("Venta Online");
-        jm_venta.add(jmi_venta_online);
+        jmi_venta_online.setText("Online");
+        jm_ventas.add(jmi_venta_online);
 
-        jMenuBar1.add(jm_venta);
+        jMenuBar1.add(jm_ventas);
 
         jm_ticket.setText("Ticket");
 
@@ -153,8 +161,10 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JMenu jm_gestion;
     private javax.swing.JMenu jm_salir;
     private javax.swing.JMenu jm_ticket;
-    private javax.swing.JMenu jm_venta;
-    private javax.swing.JMenuItem jmi_gestion_asientos;
+    private javax.swing.JMenu jm_ventas;
+    private javax.swing.JMenuItem jmi_gestion_funciones;
+    private javax.swing.JMenuItem jmi_gestion_peliculas;
+    private javax.swing.JMenuItem jmi_gestion_salas;
     private javax.swing.JMenuItem jmi_salir;
     private javax.swing.JMenuItem jmi_tickets_entradas;
     private javax.swing.JMenuItem jmi_tickets_ventas;

@@ -6,29 +6,39 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jm_gestion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Compradores"/>
+            <Property name="text" type="java.lang.String" value="Gestion"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_asientos">
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_peliculas">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Compradores"/>
+                <Property name="text" type="java.lang.String" value="Peliculas"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_funciones">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Funciones"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_salas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Salas"/>
               </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jm_venta">
+        <Menu class="javax.swing.JMenu" name="jm_ventas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Venta"/>
+            <Property name="text" type="java.lang.String" value="Ventas"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_venta_presencial">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Venta Presencial"/>
+                <Property name="text" type="java.lang.String" value="Presencial"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_venta_online">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Venta Online"/>
+                <Property name="text" type="java.lang.String" value="Online"/>
               </Properties>
             </MenuItem>
           </SubComponents>
