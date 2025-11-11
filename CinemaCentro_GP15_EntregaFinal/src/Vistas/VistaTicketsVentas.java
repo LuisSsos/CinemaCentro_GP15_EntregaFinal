@@ -499,29 +499,27 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
 
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
         if (txtIdTicket.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un ID para anular");
+            JOptionPane.showMessageDialog(this, "Debe ingresar un ID para eliminar");
             return;
         }
-
         int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Seguro que desea anular este ticket?",
-                "Confirmar",
+                "¿Está seguro que desea eliminar este ticket?",
+                "Confirmar Eliminación",
                 JOptionPane.YES_NO_OPTION);
-
         if (confirmar == JOptionPane.YES_OPTION) {
             try {
                 int id = Integer.parseInt(txtIdTicket.getText().trim());
                 ticketData.anular(id);
-                JOptionPane.showMessageDialog(this, "️Ticket anulado correctamente");
+                JOptionPane.showMessageDialog(this, "Ticket eliminado correctamente");
                 limpiarCampos();
                 actualizarTabla();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error al anular: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "El ID debe ser numérico");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Anulacion cancelada");
+            JOptionPane.showMessageDialog(this, "Eliminación cancelada");
         }
     }//GEN-LAST:event_btnAnularActionPerformed
 
