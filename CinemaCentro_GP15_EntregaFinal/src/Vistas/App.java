@@ -172,7 +172,9 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_gestion_funcionesActionPerformed
 
     private void jmi_gestion_salasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_salasActionPerformed
-        // TODO add your handling code here:
+        VistaSalas vista = new VistaSalas();
+        Escritorio.add(vista);
+        vista.setVisible(true);
     }//GEN-LAST:event_jmi_gestion_salasActionPerformed
 
     private void jmi_venta_presencialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_venta_presencialActionPerformed

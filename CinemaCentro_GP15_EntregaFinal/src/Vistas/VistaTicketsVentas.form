@@ -159,12 +159,10 @@
               <EmptySpace pref="16" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnListar" pref="54" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnCrear" pref="54" max="32767" attributes="0"/>
-                      <Component id="btnBuscar" max="32767" attributes="0"/>
-                      <Component id="btnActualizar" max="32767" attributes="0"/>
-                      <Component id="btnAnular" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="btnCrear" pref="54" max="32767" attributes="0"/>
+                  <Component id="btnBuscar" max="32767" attributes="0"/>
+                  <Component id="btnActualizar" max="32767" attributes="0"/>
+                  <Component id="btnAnular" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
           </Group>

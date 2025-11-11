@@ -395,11 +395,11 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
             int filas = ticketData.actualizar(ticket);
 
             if (filas > 0) {
-                JOptionPane.showMessageDialog(this, "✅ Ticket actualizado correctamente");
+                JOptionPane.showMessageDialog(this, "Ticket actualizado correctamente");
                 limpiarCampos();
                 actualizarTabla();
             } else {
-                JOptionPane.showMessageDialog(this, "⚠️ No se encontró ningún ticket con ese ID");
+                JOptionPane.showMessageDialog(this, "No se encontró ningún ticket con ese ID");
             }
 
         } catch (NumberFormatException ex) {
