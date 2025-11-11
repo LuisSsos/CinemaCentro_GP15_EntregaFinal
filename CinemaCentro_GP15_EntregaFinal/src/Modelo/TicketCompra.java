@@ -23,10 +23,9 @@ public class TicketCompra {
     public TicketCompra() {
     }
 
-    public TicketCompra(int id_ticket, int id_comprador, int id_funcion, Date fecha_compra, BigDecimal precio_unitario, BigDecimal monto_total, String Canal, int cantidad, String medio_pago) {
+    public TicketCompra(int id_ticket, int id_comprador, Date fecha_compra, BigDecimal precio_unitario, BigDecimal monto_total, String Canal, int cantidad, String medio_pago) {
         this.id_ticket = id_ticket;
         this.id_comprador = id_comprador;
-        this.id_funcion = id_funcion;
         this.fecha_compra = fecha_compra;
         this.precio_unitario = precio_unitario;
         this.monto_total = monto_total;
@@ -57,14 +56,6 @@ public class TicketCompra {
 
     public void setIdcomprador(int id_comprador) {
         this.id_comprador = id_comprador;
-    }
-
-    public int getIdfuncion() {
-        return id_funcion;
-    }
-
-    public void setIdfuncion(int id_funcion) {
-        this.id_funcion = id_funcion;
     }
 
     public Date getFechacompra() {

@@ -60,7 +60,6 @@
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel2" min="-2" pref="70" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
@@ -73,7 +72,6 @@
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="txtIdTicket" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtIdComprador" alignment="0" pref="100" max="32767" attributes="0"/>
-                          <Component id="txtIdFuncion" alignment="0" pref="100" max="32767" attributes="0"/>
                           <Component id="txtPrecioUnitario" alignment="0" pref="100" max="32767" attributes="0"/>
                           <Component id="txtMontoTotal" alignment="0" pref="100" max="32767" attributes="0"/>
                           <Component id="txtCantidad" alignment="0" pref="100" max="32767" attributes="0"/>
@@ -118,32 +116,27 @@
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtIdComprador" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtIdFuncion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel6" min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="dateCompra" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtPrecioUnitario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtPrecioUnitario" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtMontoTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbCanal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbMedioPago" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -156,7 +149,7 @@
                   </Group>
                   <Component id="jScrollPane2" min="-2" pref="236" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace pref="52" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnListar" pref="54" max="32767" attributes="0"/>
                   <Component id="btnCrear" pref="54" max="32767" attributes="0"/>
@@ -187,11 +180,6 @@
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="ID COMPRADOR"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="ID FUNCION"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -230,8 +218,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtIdComprador">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtIdFuncion">
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrecioUnitario">
     </Component>

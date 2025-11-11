@@ -49,7 +49,7 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
     }
 
     private void configurarTabla() {
-        String[] columnas = {"ID", "Comprador", "Funcion", "Fecha", "Precio Unit.", "Monto Total", "Canal", "Medio Pago", "Cantidad"};
+        String[] columnas = {"ID", "Comprador", "Fecha", "Precio Unit.", "Cantidad", "Monto Total", "Canal", "Medio Pago"};
 
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
             @Override
@@ -64,7 +64,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
     private void limpiarCampos() {
         txtIdTicket.setText("");
         txtIdComprador.setText("");
-        txtIdFuncion.setText("");
         dateCompra.setDate(null);
         txtPrecioUnitario.setText("");
         txtMontoTotal.setText("");
@@ -84,13 +83,12 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
                 Object[] fila = {
                     t.getIdticket(),
                     t.getIdcomprador(),
-                    t.getIdfuncion(),
                     t.getFechacompra(),
                     t.getPreciounitario(),
+                    t.getCantidad(), 
                     t.getMontototal(),
                     t.getCanal(),
-                    t.getMediopago(),
-                    t.getCantidad()
+                    t.getMediopago()
                 };
                 modelo.addRow(fila);
             }
@@ -104,13 +102,12 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
 
         txtIdTicket.setText(modelo.getValueAt(fila, 0).toString());
         txtIdComprador.setText(modelo.getValueAt(fila, 1).toString());
-        txtIdFuncion.setText(modelo.getValueAt(fila, 2).toString());
-        dateCompra.setDate((java.util.Date) modelo.getValueAt(fila, 3));
-        txtPrecioUnitario.setText(modelo.getValueAt(fila, 4).toString());
-        txtMontoTotal.setText(modelo.getValueAt(fila, 5).toString());
-        cbCanal.setSelectedItem(modelo.getValueAt(fila, 6).toString());
-        cbMedioPago.setSelectedItem(modelo.getValueAt(fila, 7).toString());
-        txtCantidad.setText(modelo.getValueAt(fila, 8).toString());
+        dateCompra.setDate((java.util.Date) modelo.getValueAt(fila, 2));
+        txtPrecioUnitario.setText(modelo.getValueAt(fila, 3).toString());
+        txtMontoTotal.setText(modelo.getValueAt(fila, 4).toString());
+        cbCanal.setSelectedItem(modelo.getValueAt(fila, 5).toString());
+        cbMedioPago.setSelectedItem(modelo.getValueAt(fila, 6).toString());
+        txtCantidad.setText(modelo.getValueAt(fila, 7).toString());
     }
 
     /**
@@ -127,7 +124,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -136,7 +132,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         txtIdTicket = new javax.swing.JTextField();
         txtIdComprador = new javax.swing.JTextField();
-        txtIdFuncion = new javax.swing.JTextField();
         txtPrecioUnitario = new javax.swing.JTextField();
         txtMontoTotal = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
@@ -174,8 +169,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
         jLabel2.setText("ID TICKET");
 
         jLabel3.setText("ID COMPRADOR");
-
-        jLabel4.setText("ID FUNCION");
 
         jLabel6.setText("FECHA COMPRA");
 
@@ -260,7 +253,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -272,7 +264,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtIdTicket, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtIdComprador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(txtIdFuncion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(txtMontoTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
@@ -309,27 +300,23 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtIdComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtIdFuncion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dateCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(txtMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(cbCanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(cbMedioPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -338,14 +325,13 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
                             .addComponent(jLabel11)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnListar, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAnular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAnular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(65, 65, 65))
         );
 
@@ -361,10 +347,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
         try {
             if (txtIdTicket.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe ingresar el ID del ticket a actualizar");
-                return;
-            }
-            if (txtIdComprador.getText().trim().isEmpty() || txtIdFuncion.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar los IDs de comprador y función");
                 return;
             }
             if (dateCompra.getDate() == null) {
@@ -384,7 +366,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
             TicketCompra ticket = new TicketCompra();
             ticket.setIdticket(idTicket);
             ticket.setIdcomprador(Integer.parseInt(txtIdComprador.getText().trim()));
-            ticket.setIdfuncion(Integer.parseInt(txtIdFuncion.getText().trim()));
             ticket.setFechacompra(dateCompra.getDate());
             ticket.setPreciounitario(precioUnitario);
             ticket.setMontototal(montoTotal);
@@ -416,10 +397,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
 
         try {
-            if (txtIdComprador.getText().trim().isEmpty() || txtIdFuncion.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe ingresar los IDs de comprador y función");
-                return;
-            }
             if (dateCompra.getDate() == null) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de compra");
                 return;
@@ -445,7 +422,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
 
             TicketCompra ticket = new TicketCompra();
             ticket.setIdcomprador(Integer.parseInt(txtIdComprador.getText().trim()));
-            ticket.setIdfuncion(Integer.parseInt(txtIdFuncion.getText().trim()));
             ticket.setFechacompra(dateCompra.getDate());
             ticket.setPreciounitario(precioUnitario);
             ticket.setMontototal(montoTotal);
@@ -481,7 +457,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
             }
 
             txtIdComprador.setText(String.valueOf(ticket.getIdcomprador()));
-            txtIdFuncion.setText(String.valueOf(ticket.getIdfuncion()));
             dateCompra.setDate(ticket.getFechacompra());
             txtPrecioUnitario.setText(ticket.getPreciounitario().toString());
             txtMontoTotal.setText(ticket.getMontototal().toString());
@@ -546,7 +521,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -557,7 +531,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtTickets;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtIdComprador;
-    private javax.swing.JTextField txtIdFuncion;
     private javax.swing.JTextField txtIdTicket;
     private javax.swing.JTextField txtMontoTotal;
     private javax.swing.JTextField txtPrecioUnitario;

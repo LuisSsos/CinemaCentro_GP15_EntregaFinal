@@ -25,16 +25,15 @@ public class TicketCompraData {
     }
 
     public int crear(TicketCompra t) {
-        String sql = "INSERT INTO ticket_compra (id_comprador, id_funcion, fecha_compra, precio_unitario, monto_total, canal, medio_pago, cantidad) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ticket_compra (id_comprador, fecha_compra, precio_unitario, cantidad, monto_total, canal, medio_pago) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, t.getIdcomprador());
-            ps.setInt(2, t.getIdfuncion());
-            ps.setTimestamp(3, new Timestamp(t.getFechacompra().getTime()));
-            ps.setBigDecimal(4, t.getPreciounitario());
+            ps.setTimestamp(2, new Timestamp(t.getFechacompra().getTime()));
+            ps.setBigDecimal(3, t.getPreciounitario());
+            ps.setInt(4, t.getCantidad()); // <-- DEJÁ ESTO
             ps.setBigDecimal(5, t.getMontototal());
             ps.setString(6, t.getCanal());
             ps.setString(7, t.getMediopago());
-            ps.setInt(8, t.getCantidad());
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -46,6 +45,21 @@ public class TicketCompraData {
             JOptionPane.showMessageDialog(null, "Error al crear ticket: " + ex.getMessage());
         }
         return -1;
+    }
+
+    public int actualizar(TicketCompra t) throws SQLException {
+        String sql = "UPDATE ticket_compra SET id_comprador=?, fecha_compra=?, precio_unitario=?, cantidad=?, monto_total=?, canal=?, medio_pago=? WHERE id_ticket=?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, t.getIdcomprador());
+            ps.setTimestamp(2, new Timestamp(t.getFechacompra().getTime()));
+            ps.setBigDecimal(3, t.getPreciounitario());
+            ps.setInt(4, t.getCantidad()); // <-- DEJÁ ESTO
+            ps.setBigDecimal(5, t.getMontototal());
+            ps.setString(6, t.getCanal());
+            ps.setString(7, t.getMediopago());
+            ps.setInt(8, t.getIdticket());
+            return ps.executeUpdate();
+        }
     }
 
     public TicketCompra buscarPorId(int idTicket) throws SQLException {
@@ -82,22 +96,6 @@ public class TicketCompraData {
         }
     }
 
-    public int actualizar(TicketCompra t) throws SQLException {
-        String sql = "UPDATE ticket_compra SET id_comprador=?, id_funcion=?, fecha_compra=?, precio_unitario=?, monto_total=?, canal=?, medio_pago=?, cantidad=? WHERE id_ticket=?";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, t.getIdcomprador());
-            ps.setInt(2, t.getIdfuncion());
-            ps.setTimestamp(3, new Timestamp(t.getFechacompra().getTime()));
-            ps.setBigDecimal(4, t.getPreciounitario());
-            ps.setBigDecimal(5, t.getMontototal());
-            ps.setString(6, t.getCanal());
-            ps.setString(7, t.getMediopago());
-            ps.setInt(8, t.getCantidad());
-            ps.setInt(9, t.getIdticket());
-            return ps.executeUpdate();
-        }
-    }
-
     public List<TicketCompra> listarPorFecha(java.time.LocalDate fecha) throws SQLException {
         String sql = "SELECT * FROM ticket_compra WHERE DATE(fecha_compra)=? ORDER BY id_ticket";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -116,25 +114,12 @@ public class TicketCompraData {
         TicketCompra t = new TicketCompra();
         t.setIdticket(rs.getInt("id_ticket"));
         t.setIdcomprador(rs.getInt("id_comprador"));
-        try {
-            t.setIdfuncion(rs.getInt("id_funcion"));
-        } catch (SQLException ignore) {
-        }
         t.setFechacompra(rs.getTimestamp("fecha_compra"));
         t.setPreciounitario(rs.getBigDecimal("precio_unitario"));
+        t.setCantidad(rs.getInt("cantidad"));
         t.setMontototal(rs.getBigDecimal("monto_total"));
-        try {
-            t.setCanal(rs.getString("canal"));
-        } catch (SQLException ignore) {
-        }
-        try {
-            t.setMediopago(rs.getString("medio_pago"));
-        } catch (SQLException ignore) {
-        }
-        try {
-            t.setCantidad(rs.getInt("cantidad"));
-        } catch (SQLException ignore) {
-        }
+        t.setCanal(rs.getString("canal"));
+        t.setMediopago(rs.getString("medio_pago"));
         return t;
     }
 }
