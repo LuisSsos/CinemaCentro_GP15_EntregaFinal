@@ -26,15 +26,204 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnl_gestion_funciones = new javax.swing.JPanel();
+        lb_titulo = new javax.swing.JLabel();
+        sp_tabla = new javax.swing.JScrollPane();
+        tb_tabla = new javax.swing.JTable();
+        lb_pelicula = new javax.swing.JLabel();
+        cb_pelicula = new javax.swing.JComboBox<>();
+        lb_sala = new javax.swing.JLabel();
+        lb_inicio = new javax.swing.JLabel();
+        lb_idioma = new javax.swing.JLabel();
+        cb_sala = new javax.swing.JComboBox<>();
+        cb_idioma = new javax.swing.JComboBox<>();
+        lb_fecha_inicio = new javax.swing.JLabel();
+        lb_hora_inicio = new javax.swing.JLabel();
+        btn_guardar = new javax.swing.JButton();
+        btn_nuevo = new javax.swing.JButton();
+        btn_actualizar = new javax.swing.JButton();
+        btn_eliminar = new javax.swing.JButton();
+        txt_fecha = new javax.swing.JTextField();
+        lb_fin = new javax.swing.JLabel();
+        lb_fecha_fin = new javax.swing.JLabel();
+        lb_hora_fin = new javax.swing.JLabel();
+        txt_fecha1 = new javax.swing.JTextField();
+        txt_hora1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+
+        lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lb_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_titulo.setText("Gestión Funciones");
+
+        tb_tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Pelicula", "Sala", "Inicio", "Fin"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        sp_tabla.setViewportView(tb_tabla);
+
+        lb_pelicula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lb_pelicula.setText("Pelicula:");
+
+        lb_sala.setText("Sala:");
+
+        lb_inicio.setText("Inicio:");
+
+        lb_idioma.setText("Idioma:");
+
+        lb_fecha_inicio.setText("Fecha:");
+
+        lb_hora_inicio.setText("Hora:");
+
+        btn_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/guardar.png"))); // NOI18N
+        btn_guardar.setText("Guardar");
+
+        btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/escoba.png"))); // NOI18N
+        btn_nuevo.setText("Nuevo");
+
+        btn_actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-aprobar-y-actualizar-48.png"))); // NOI18N
+        btn_actualizar.setText("Actualizar");
+
+        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/eliminar.png"))); // NOI18N
+        btn_eliminar.setText("Eliminar");
+
+        lb_fin.setText("Fin:");
+
+        lb_fecha_fin.setText("Fecha:");
+
+        lb_hora_fin.setText("Hora:");
+
+        txt_fecha1.setEditable(false);
+
+        txt_hora1.setEditable(false);
+
+        javax.swing.GroupLayout pnl_gestion_funcionesLayout = new javax.swing.GroupLayout(pnl_gestion_funciones);
+        pnl_gestion_funciones.setLayout(pnl_gestion_funcionesLayout);
+        pnl_gestion_funcionesLayout.setHorizontalGroup(
+            pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lb_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                        .addGap(305, 305, 305)
+                        .addComponent(lb_pelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_pelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(sp_tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(btn_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_gestion_funcionesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                        .addComponent(lb_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_gestion_funcionesLayout.createSequentialGroup()
+                            .addComponent(lb_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                                    .addComponent(lb_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txt_fecha))
+                                .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                                    .addComponent(lb_hora_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                            .addComponent(lb_idioma, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(cb_idioma, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(50, 50, 50)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lb_hora_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                        .addComponent(lb_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lb_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_fecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_hora1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75))
+        );
+        pnl_gestion_funcionesLayout.setVerticalGroup(
+            pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lb_titulo)
+                .addGap(34, 34, 34)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lb_pelicula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cb_pelicula, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(sp_tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_hora_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_hora_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_hora1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cb_idioma)
+                    .addComponent(lb_idioma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addComponent(pnl_gestion_funciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addComponent(pnl_gestion_funciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -42,5 +231,29 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_actualizar;
+    private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton btn_guardar;
+    private javax.swing.JButton btn_nuevo;
+    private javax.swing.JComboBox<String> cb_idioma;
+    private javax.swing.JComboBox<String> cb_pelicula;
+    private javax.swing.JComboBox<String> cb_sala;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel lb_fecha_fin;
+    private javax.swing.JLabel lb_fecha_inicio;
+    private javax.swing.JLabel lb_fin;
+    private javax.swing.JLabel lb_hora_fin;
+    private javax.swing.JLabel lb_hora_inicio;
+    private javax.swing.JLabel lb_idioma;
+    private javax.swing.JLabel lb_inicio;
+    private javax.swing.JLabel lb_pelicula;
+    private javax.swing.JLabel lb_sala;
+    private javax.swing.JLabel lb_titulo;
+    private javax.swing.JPanel pnl_gestion_funciones;
+    private javax.swing.JScrollPane sp_tabla;
+    private javax.swing.JTable tb_tabla;
+    private javax.swing.JTextField txt_fecha;
+    private javax.swing.JTextField txt_fecha1;
+    private javax.swing.JTextField txt_hora1;
     // End of variables declaration//GEN-END:variables
 }
