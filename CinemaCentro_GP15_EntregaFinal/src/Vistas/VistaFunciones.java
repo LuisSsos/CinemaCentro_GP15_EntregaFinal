@@ -43,13 +43,17 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
         btn_nuevo = new javax.swing.JButton();
         btn_actualizar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
-        txt_fecha = new javax.swing.JTextField();
         lb_fin = new javax.swing.JLabel();
         lb_fecha_fin = new javax.swing.JLabel();
         lb_hora_fin = new javax.swing.JLabel();
-        txt_fecha1 = new javax.swing.JTextField();
-        txt_hora1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txt_fecha_fin = new javax.swing.JTextField();
+        txt_hora_fin = new javax.swing.JTextField();
+        cb_hora_inicio = new javax.swing.JComboBox<>();
+        dc_fecha_inicio = new com.toedter.calendar.JDateChooser();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lb_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -91,15 +95,35 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
         btn_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/guardar.png"))); // NOI18N
         btn_guardar.setText("Guardar");
+        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarActionPerformed(evt);
+            }
+        });
 
         btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/escoba.png"))); // NOI18N
         btn_nuevo.setText("Nuevo");
+        btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevoActionPerformed(evt);
+            }
+        });
 
         btn_actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-aprobar-y-actualizar-48.png"))); // NOI18N
         btn_actualizar.setText("Actualizar");
+        btn_actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_actualizarActionPerformed(evt);
+            }
+        });
 
         btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/eliminar.png"))); // NOI18N
         btn_eliminar.setText("Eliminar");
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
 
         lb_fin.setText("Fin:");
 
@@ -107,9 +131,9 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
         lb_hora_fin.setText("Hora:");
 
-        txt_fecha1.setEditable(false);
+        txt_fecha_fin.setEditable(false);
 
-        txt_hora1.setEditable(false);
+        txt_hora_fin.setEditable(false);
 
         javax.swing.GroupLayout pnl_gestion_funcionesLayout = new javax.swing.GroupLayout(pnl_gestion_funciones);
         pnl_gestion_funciones.setLayout(pnl_gestion_funcionesLayout);
@@ -151,11 +175,11 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
                                 .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
                                     .addComponent(lb_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txt_fecha))
+                                    .addComponent(dc_fecha_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
                                     .addComponent(lb_hora_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(cb_hora_inicio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGroup(pnl_gestion_funcionesLayout.createSequentialGroup()
                             .addComponent(lb_idioma, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
@@ -169,8 +193,8 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
                         .addComponent(lb_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_fecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_hora1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_hora_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(75, 75, 75))
         );
         pnl_gestion_funcionesLayout.setVerticalGroup(
@@ -189,19 +213,20 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
                     .addComponent(lb_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cb_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_fecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lb_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lb_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lb_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lb_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dc_fecha_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_hora_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lb_hora_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_hora1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_hora_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_hora_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnl_gestion_funcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cb_idioma)
@@ -229,16 +254,33 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_nuevoActionPerformed
+
+    private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_guardarActionPerformed
+
+    private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_actualizarActionPerformed
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_actualizar;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_guardar;
     private javax.swing.JButton btn_nuevo;
+    private javax.swing.JComboBox<String> cb_hora_inicio;
     private javax.swing.JComboBox<String> cb_idioma;
     private javax.swing.JComboBox<String> cb_pelicula;
     private javax.swing.JComboBox<String> cb_sala;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private com.toedter.calendar.JDateChooser dc_fecha_inicio;
     private javax.swing.JLabel lb_fecha_fin;
     private javax.swing.JLabel lb_fecha_inicio;
     private javax.swing.JLabel lb_fin;
@@ -252,8 +294,7 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pnl_gestion_funciones;
     private javax.swing.JScrollPane sp_tabla;
     private javax.swing.JTable tb_tabla;
-    private javax.swing.JTextField txt_fecha;
-    private javax.swing.JTextField txt_fecha1;
-    private javax.swing.JTextField txt_hora1;
+    private javax.swing.JTextField txt_fecha_fin;
+    private javax.swing.JTextField txt_hora_fin;
     // End of variables declaration//GEN-END:variables
 }
