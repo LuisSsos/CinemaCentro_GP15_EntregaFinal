@@ -1,13 +1,10 @@
 package Vistas;
 
-/** 
-    @author Grupo 15
-    Luis Ezequiel Sosa
-    Lucas Saidman
-    Luca Rodrigaño
-    Ignacio Rodriguez
-**/
-
+/**
+ * @author Grupo 15 Luis Ezequiel Sosa Lucas Saidman Luca Rodrigaño Ignacio
+ * Rodriguez
+ *
+ */
 public class App extends javax.swing.JFrame {
 
     /**
@@ -57,12 +54,27 @@ public class App extends javax.swing.JFrame {
         jm_gestion.setText("Gestion");
 
         jmi_gestion_peliculas.setText("Peliculas");
+        jmi_gestion_peliculas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_gestion_peliculasActionPerformed(evt);
+            }
+        });
         jm_gestion.add(jmi_gestion_peliculas);
 
         jmi_gestion_funciones.setText("Funciones");
+        jmi_gestion_funciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_gestion_funcionesActionPerformed(evt);
+            }
+        });
         jm_gestion.add(jmi_gestion_funciones);
 
         jmi_gestion_salas.setText("Salas");
+        jmi_gestion_salas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_gestion_salasActionPerformed(evt);
+            }
+        });
         jm_gestion.add(jmi_gestion_salas);
 
         jMenuBar1.add(jm_gestion);
@@ -70,9 +82,19 @@ public class App extends javax.swing.JFrame {
         jm_ventas.setText("Ventas");
 
         jmi_venta_presencial.setText("Presencial");
+        jmi_venta_presencial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_venta_presencialActionPerformed(evt);
+            }
+        });
         jm_ventas.add(jmi_venta_presencial);
 
         jmi_venta_online.setText("Online");
+        jmi_venta_online.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_venta_onlineActionPerformed(evt);
+            }
+        });
         jm_ventas.add(jmi_venta_online);
 
         jMenuBar1.add(jm_ventas);
@@ -80,9 +102,19 @@ public class App extends javax.swing.JFrame {
         jm_ticket.setText("Ticket");
 
         jmi_tickets_ventas.setText("Tickets de Ventas");
+        jmi_tickets_ventas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_tickets_ventasActionPerformed(evt);
+            }
+        });
         jm_ticket.add(jmi_tickets_ventas);
 
         jmi_tickets_entradas.setText("Entradas");
+        jmi_tickets_entradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_tickets_entradasActionPerformed(evt);
+            }
+        });
         jm_ticket.add(jmi_tickets_entradas);
 
         jMenuBar1.add(jm_ticket);
@@ -119,6 +151,47 @@ public class App extends javax.swing.JFrame {
     private void jmi_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_salirActionPerformed
         dispose();
     }//GEN-LAST:event_jmi_salirActionPerformed
+
+    private void jmi_tickets_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_tickets_ventasActionPerformed
+        VistaTicketsVentas vista = new VistaTicketsVentas();
+        Escritorio.add(vista);
+        vista.setVisible(true);
+
+    }//GEN-LAST:event_jmi_tickets_ventasActionPerformed
+
+    private void jmi_gestion_peliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_peliculasActionPerformed
+        VistaPelicula vista = new VistaPelicula();
+        Escritorio.add(vista);
+        vista.setVisible(true);
+    }//GEN-LAST:event_jmi_gestion_peliculasActionPerformed
+
+    private void jmi_gestion_funcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_funcionesActionPerformed
+        VistaFunciones vista = new VistaFunciones();
+        Escritorio.add(vista);
+        vista.setVisible(true);
+    }//GEN-LAST:event_jmi_gestion_funcionesActionPerformed
+
+    private void jmi_gestion_salasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_salasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmi_gestion_salasActionPerformed
+
+    private void jmi_venta_presencialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_venta_presencialActionPerformed
+        VistaVentaPresencial vista = new VistaVentaPresencial();
+        Escritorio.add(vista);
+        vista.setVisible(true);
+    }//GEN-LAST:event_jmi_venta_presencialActionPerformed
+
+    private void jmi_venta_onlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_venta_onlineActionPerformed
+        VistaVentaOnline vista = new VistaVentaOnline();
+        Escritorio.add(vista);
+        vista.setVisible(true);
+    }//GEN-LAST:event_jmi_venta_onlineActionPerformed
+
+    private void jmi_tickets_entradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_tickets_entradasActionPerformed
+        VistaEntradas vista = new VistaEntradas();
+        Escritorio.add(vista);
+        vista.setVisible(true);
+    }//GEN-LAST:event_jmi_tickets_entradasActionPerformed
 
     /**
      * @param args the command line arguments

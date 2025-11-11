@@ -5,15 +5,13 @@ import Modelo.TicketCompra;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
-/** 
-    @author Grupo 15
-    Luis Ezequiel Sosa
-    Lucas Saidman
-    Luca Rodrigaño
-    Ignacio Rodriguez
-**/
-
+/**
+ * @author Grupo 15 Luis Ezequiel Sosa Lucas Saidman Luca Rodrigaño Ignacio
+ * Rodriguez
+ *
+ */
 public class TicketCompraData {
 
     private final Connection con;
@@ -26,25 +24,42 @@ public class TicketCompraData {
         }
     }
 
-    public int crear(TicketCompra t) throws SQLException {
-        String sql = "INSERT INTO ticket_compra (id_comprador, fecha_compra, precio_unitario, monto_total, canal, medio_pago, cantidad, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public int crear(TicketCompra t) {
+    String sql = "INSERT INTO ticket_compra (id_comprador, id_funcion, fecha_compra, precio_unitario, monto_total, canal, medio_pago, cantidad) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        ps.setInt(1, t.getIdcomprador());
+        ps.setInt(2, t.getIdfuncion());
+        ps.setTimestamp(3, new Timestamp(t.getFechacompra().getTime()));
+        ps.setBigDecimal(4, t.getPreciounitario());
+        ps.setBigDecimal(5, t.getMontototal());
+        ps.setString(6, t.getCanal());
+        ps.setString(7, t.getMediopago());
+        ps.setInt(8, t.getCantidad());
+        ps.executeUpdate();
 
-        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, t.getIdcomprador());
-            ps.setBigDecimal(2, t.getPreciounitario());
-            ps.setBigDecimal(3, t.getMontototal());
-            ps.setString(4, t.getCanal());
-            ps.setString(5, t.getMediopago());
-            ps.setInt(6, t.getCantidad());
-            ps.executeUpdate();
+        try (ResultSet rs = ps.getGeneratedKeys()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al crear ticket: " + ex.getMessage());
+    }
+    return -1;
+}
 
-            try (ResultSet rs = ps.getGeneratedKeys()) {
+
+    public TicketCompra buscarPorId(int idTicket) throws SQLException {
+        String sql = "SELECT * FROM ticket_compra WHERE id_ticket=?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idTicket);
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt(1);
+                    return map(rs);
                 }
             }
         }
-        throw new SQLException("Error. No se genero el ticket");
+        return null;
     }
 
     public void anular(int idTicket) throws SQLException {
@@ -54,6 +69,35 @@ public class TicketCompraData {
             ps.executeUpdate();
         }
     }
+
+    public List<TicketCompra> listarTodos() throws SQLException {
+        String sql = "SELECT * FROM ticket_compra ORDER BY fecha_compra DESC";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                List<TicketCompra> out = new ArrayList<>();
+                while (rs.next()) {
+                    out.add(map(rs));
+                }
+                return out;
+            }
+        }
+    }
+
+    public int actualizar(TicketCompra t) throws SQLException {
+    String sql = "UPDATE ticket_compra SET id_comprador=?, id_funcion=?, fecha_compra=?, precio_unitario=?, monto_total=?, canal=?, medio_pago=?, cantidad=? WHERE id_ticket=?";
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, t.getIdcomprador());
+        ps.setInt(2, t.getIdfuncion());
+        ps.setTimestamp(3, new Timestamp(t.getFechacompra().getTime()));
+        ps.setBigDecimal(4, t.getPreciounitario());
+        ps.setBigDecimal(5, t.getMontototal());
+        ps.setString(6, t.getCanal());
+        ps.setString(7, t.getMediopago());
+        ps.setInt(8, t.getCantidad());
+        ps.setInt(9, t.getIdticket());
+        return ps.executeUpdate();
+    }
+}
 
     public List<TicketCompra> listarPorFecha(java.time.LocalDate fecha) throws SQLException {
         String sql = "SELECT * FROM ticket_compra WHERE DATE(fecha_compra)=? ORDER BY id_ticket";
@@ -94,15 +138,4 @@ public class TicketCompraData {
         }
         return t;
     }
-}   
-        
-        
-        
-
-    
-    
-    
-    
-    
-    
-
+}

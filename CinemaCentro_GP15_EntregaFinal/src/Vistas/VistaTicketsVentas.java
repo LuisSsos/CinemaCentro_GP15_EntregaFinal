@@ -1,8 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package Vistas;
+
+import Modelo.TicketCompra;
+import Persistencia.TicketCompraData;
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.util.List;
+import com.toedter.calendar.JDateChooser;
 
 /**
  *
@@ -10,11 +14,103 @@ package Vistas;
  */
 public class VistaTicketsVentas extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VistaTicketsVentas
-     */
+    private TicketCompraData ticketData;
+
     public VistaTicketsVentas() {
         initComponents();
+        initComponents();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Gestion de Tickets");
+
+        cbCanal.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"WEB", "PRESENCIAL", "TELEFONO"}
+        ));
+
+        cbMedioPago.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"EFECTIVO", "TARJETA", "TRANSFERENCIA", "MERCADOPAGO"}
+        ));
+
+        ticketData = new TicketCompraData();
+
+        configurarTabla();
+
+        jtTickets.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int fila = jtTickets.getSelectedRow();
+                if (fila >= 0) {
+                    cargarDatosDesdeTabla(fila);
+                }
+            }
+        });
+    }
+
+    private void configurarTabla() {
+        String[] columnas = {"ID", "Comprador", "Funcion", "Fecha", "Precio Unit.", "Monto Total", "Canal", "Medio Pago", "Cantidad"};
+
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        jtTickets.setModel(modelo);
+    }
+
+    private void limpiarCampos() {
+        txtIdTicket.setText("");
+        txtIdComprador.setText("");
+        txtIdFuncion.setText("");
+        dateCompra.setDate(null);
+        txtPrecioUnitario.setText("");
+        txtMontoTotal.setText("");
+        txtCantidad.setText("");
+        cbCanal.setSelectedIndex(0);
+        cbMedioPago.setSelectedIndex(0);
+    }
+
+    private void actualizarTabla() {
+        try {
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jtTickets.getModel();
+            modelo.setRowCount(0);
+
+            List<TicketCompra> tickets = ticketData.listarTodos();
+
+            for (TicketCompra t : tickets) {
+                Object[] fila = {
+                    t.getIdticket(),
+                    t.getIdcomprador(),
+                    t.getIdfuncion(),
+                    t.getFechacompra(),
+                    t.getPreciounitario(),
+                    t.getMontototal(),
+                    t.getCanal(),
+                    t.getMediopago(),
+                    t.getCantidad()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al listar: " + e.getMessage());
+        }
+    }
+
+    private void cargarDatosDesdeTabla(int fila) {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jtTickets.getModel();
+
+        txtIdTicket.setText(modelo.getValueAt(fila, 0).toString());
+        txtIdComprador.setText(modelo.getValueAt(fila, 1).toString());
+        txtIdFuncion.setText(modelo.getValueAt(fila, 2).toString());
+        dateCompra.setDate((java.util.Date) modelo.getValueAt(fila, 3));
+        txtPrecioUnitario.setText(modelo.getValueAt(fila, 4).toString());
+        txtMontoTotal.setText(modelo.getValueAt(fila, 5).toString());
+        cbCanal.setSelectedItem(modelo.getValueAt(fila, 6).toString());
+        cbMedioPago.setSelectedItem(modelo.getValueAt(fila, 7).toString());
+        txtCantidad.setText(modelo.getValueAt(fila, 8).toString());
     }
 
     /**
@@ -26,21 +122,446 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txtIdTicket = new javax.swing.JTextField();
+        txtIdComprador = new javax.swing.JTextField();
+        txtIdFuncion = new javax.swing.JTextField();
+        txtPrecioUnitario = new javax.swing.JTextField();
+        txtMontoTotal = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
+        dateCompra = new com.toedter.calendar.JDateChooser();
+        cbCanal = new javax.swing.JComboBox<>();
+        cbMedioPago = new javax.swing.JComboBox<>();
+        btnCrear = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnAnular = new javax.swing.JButton();
+        btnListar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtTickets = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        setMinimumSize(new java.awt.Dimension(960, 476));
+        setPreferredSize(new java.awt.Dimension(960, 476));
+
+        jLabel1.setFont(new java.awt.Font("Sylfaen", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Gestión de Tickets de Compra");
+
+        jLabel2.setText("ID TICKET");
+
+        jLabel3.setText("ID COMPRADOR");
+
+        jLabel4.setText("ID FUNCION");
+
+        jLabel6.setText("FECHA COMPRA");
+
+        jLabel7.setText("PRECIO UNITARIO");
+
+        jLabel8.setText("MONTO TOTAL");
+
+        jLabel9.setText("CANAL");
+
+        jLabel10.setText("MEDIO DE PAGO");
+
+        jLabel11.setText("CANTIDAD");
+
+        txtIdTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdTicketActionPerformed(evt);
+            }
+        });
+
+        cbCanal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbMedioPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnCrear.setText("Crear");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnAnular.setText("Anular");
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularActionPerformed(evt);
+            }
+        });
+
+        btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
+
+        jtTickets.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jtTickets);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtIdTicket, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtIdComprador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(txtIdFuncion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(txtMontoTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(dateCompra, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbCanal, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbMedioPago, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtIdTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtIdComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtIdFuncion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6)
+                            .addComponent(dateCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(cbCanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(cbMedioPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnListar, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAnular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(65, 65, 65))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtIdTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdTicketActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdTicketActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+
+        try {
+            if (txtIdTicket.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar el ID del ticket a actualizar");
+                return;
+            }
+            if (txtIdComprador.getText().trim().isEmpty() || txtIdFuncion.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar los IDs de comprador y función");
+                return;
+            }
+            if (dateCompra.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de compra");
+                return;
+            }
+            if (txtPrecioUnitario.getText().trim().isEmpty() || txtCantidad.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar precio unitario y cantidad");
+                return;
+            }
+
+            int idTicket = Integer.parseInt(txtIdTicket.getText().trim());
+            BigDecimal precioUnitario = new BigDecimal(txtPrecioUnitario.getText().trim());
+            int cantidad = Integer.parseInt(txtCantidad.getText().trim());
+            BigDecimal montoTotal = precioUnitario.multiply(new BigDecimal(cantidad));
+
+            TicketCompra ticket = new TicketCompra();
+            ticket.setIdticket(idTicket);
+            ticket.setIdcomprador(Integer.parseInt(txtIdComprador.getText().trim()));
+            ticket.setIdfuncion(Integer.parseInt(txtIdFuncion.getText().trim()));
+            ticket.setFechacompra(dateCompra.getDate());
+            ticket.setPreciounitario(precioUnitario);
+            ticket.setMontototal(montoTotal);
+            ticket.setCanal(cbCanal.getSelectedItem().toString());
+            ticket.setMediopago(cbMedioPago.getSelectedItem().toString());
+            ticket.setCantidad(cantidad);
+
+            int filas = ticketData.actualizar(ticket);
+
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(this, "✅ Ticket actualizado correctamente");
+                limpiarCampos();
+                actualizarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "⚠️ No se encontró ningún ticket con ese ID");
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error: formato de número inválido");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error SQL: " + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+
+        try {
+            if (txtIdComprador.getText().trim().isEmpty() || txtIdFuncion.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar los IDs de comprador y función");
+                return;
+            }
+            if (dateCompra.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha de compra");
+                return;
+            }
+            if (txtPrecioUnitario.getText().trim().isEmpty() || txtCantidad.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar precio unitario y cantidad");
+                return;
+            }
+
+            BigDecimal precioUnitario, montoTotal;
+            int cantidad;
+
+            try {
+                precioUnitario = new BigDecimal(txtPrecioUnitario.getText().trim());
+                cantidad = Integer.parseInt(txtCantidad.getText().trim());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Precio o cantidad inválidos");
+                return;
+            }
+
+            montoTotal = precioUnitario.multiply(new BigDecimal(cantidad));
+            txtMontoTotal.setText(montoTotal.toString());
+
+            TicketCompra ticket = new TicketCompra();
+            ticket.setIdcomprador(Integer.parseInt(txtIdComprador.getText().trim()));
+            ticket.setIdfuncion(Integer.parseInt(txtIdFuncion.getText().trim()));
+            ticket.setFechacompra(dateCompra.getDate());
+            ticket.setPreciounitario(precioUnitario);
+            ticket.setMontototal(montoTotal);
+            ticket.setCanal(cbCanal.getSelectedItem().toString());
+            ticket.setMediopago(cbMedioPago.getSelectedItem().toString());
+            ticket.setCantidad(cantidad);
+
+            int idGenerado = ticketData.crear(ticket);
+            JOptionPane.showMessageDialog(this, "Ticket creado con ID: " + idGenerado);
+
+            limpiarCampos();
+            actualizarTabla();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (txtIdTicket.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar el ID del ticket");
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(txtIdTicket.getText().trim());
+            TicketCompra ticket = ticketData.buscarPorId(id);
+
+            if (ticket == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró ningún ticket con ese ID");
+                return;
+            }
+
+            txtIdComprador.setText(String.valueOf(ticket.getIdcomprador()));
+            txtIdFuncion.setText(String.valueOf(ticket.getIdfuncion()));
+            dateCompra.setDate(ticket.getFechacompra());
+            txtPrecioUnitario.setText(ticket.getPreciounitario().toString());
+            txtMontoTotal.setText(ticket.getMontototal().toString());
+            cbCanal.setSelectedItem(ticket.getCanal());
+            cbMedioPago.setSelectedItem(ticket.getMediopago());
+            txtCantidad.setText(String.valueOf(ticket.getCantidad()));
+
+            JOptionPane.showMessageDialog(this, "Ticket encontrado y cargado");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El ID debe ser numérico");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al buscar ticket: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
+        if (txtIdTicket.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un ID para anular");
+            return;
+        }
+
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Seguro que desea anular este ticket?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmar == JOptionPane.YES_OPTION) {
+            try {
+                int id = Integer.parseInt(txtIdTicket.getText().trim());
+                ticketData.anular(id);
+                JOptionPane.showMessageDialog(this, "️Ticket anulado correctamente");
+                limpiarCampos();
+                actualizarTabla();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error al anular: " + ex.getMessage());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "El ID debe ser numérico");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Anulacion cancelada");
+        }
+    }//GEN-LAST:event_btnAnularActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        try {
+            actualizarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al listar tickets: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnListarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAnular;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnListar;
+    private javax.swing.JComboBox<String> cbCanal;
+    private javax.swing.JComboBox<String> cbMedioPago;
+    private com.toedter.calendar.JDateChooser dateCompra;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtTickets;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtIdComprador;
+    private javax.swing.JTextField txtIdFuncion;
+    private javax.swing.JTextField txtIdTicket;
+    private javax.swing.JTextField txtMontoTotal;
+    private javax.swing.JTextField txtPrecioUnitario;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,16 +3,13 @@ package Modelo;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/** 
-    @author Grupo 15
-    Luis Ezequiel Sosa
-    Lucas Saidman
-    Luca Rodrigaño
-    Ignacio Rodriguez
-**/
-
+/**
+ * @author Grupo 15 Luis Ezequiel Sosa Lucas Saidman Luca Rodrigaño Ignacio
+ * Rodriguez
+*
+ */
 public class TicketCompra {
-    
+
     private int id_ticket;
     private int id_comprador;
     private int id_funcion;
@@ -22,10 +19,11 @@ public class TicketCompra {
     private String Canal;
     private String medio_pago;
     private int cantidad;
+
     public TicketCompra() {
     }
 
-    public TicketCompra(int id_ticket, int id_comprador, int id_funcion, Date fecha_compra, BigDecimal precio_unitario, BigDecimal monto_total, String Canal,int cantidad, String medio_pago) {
+    public TicketCompra(int id_ticket, int id_comprador, int id_funcion, Date fecha_compra, BigDecimal precio_unitario, BigDecimal monto_total, String Canal, int cantidad, String medio_pago) {
         this.id_ticket = id_ticket;
         this.id_comprador = id_comprador;
         this.id_funcion = id_funcion;
@@ -48,7 +46,7 @@ public class TicketCompra {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
+
     public void setIdticket(int id_ticket) {
         this.id_ticket = id_ticket;
     }
@@ -111,9 +109,7 @@ public class TicketCompra {
 
     @Override
     public String toString() {
-        return "TicketCompra{" + "id_ticket=" + id_ticket + ", id_comprador=" + id_comprador + ", id_funcion=" + id_funcion + ", fecha_compra=" + fecha_compra + ", precio_unitario=" + precio_unitario + ", monto_total=" + monto_total + ", Canal=" + Canal + ", medio_pago=" + medio_pago +", cantidad=" + cantidad + '}';
+        return "TicketCompra{" + "id_ticket=" + id_ticket + ", id_comprador=" + id_comprador + ", id_funcion=" + id_funcion + ", fecha_compra=" + fecha_compra + ", precio_unitario=" + precio_unitario + ", monto_total=" + monto_total + ", Canal=" + Canal + ", medio_pago=" + medio_pago + ", cantidad=" + cantidad + '}';
     }
 
-    
-    
 }
