@@ -6,6 +6,14 @@ package Vistas;
  *
  */
 public class App extends javax.swing.JFrame {
+    
+    private VistaEntradas vistaEntradas;
+    private VistaFunciones vistaFunciones;
+    private VistaPelicula vistaPelicula;
+    private VistaSalas vistaSalas;
+    private VistaTicketsVentas vistaTicketsVentas;
+    private VistaVentaOnline vistaVentaOnline;
+    private VistaVentaPresencial vistaVentaPresencial;
 
     /**
      * Creates new form App
@@ -153,46 +161,59 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_salirActionPerformed
 
     private void jmi_tickets_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_tickets_ventasActionPerformed
-        VistaTicketsVentas vista = new VistaTicketsVentas();
-        Escritorio.add(vista);
-        vista.setVisible(true);
-
+        if(vistaTicketsVentas == null || vistaTicketsVentas.isClosed()){
+            vistaTicketsVentas = new Vistas.VistaTicketsVentas();
+            Escritorio.add(vistaTicketsVentas);
+            vistaTicketsVentas.setVisible(true);
+        }; 
     }//GEN-LAST:event_jmi_tickets_ventasActionPerformed
 
     private void jmi_gestion_peliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_peliculasActionPerformed
-        VistaPelicula vista = new VistaPelicula();
-        Escritorio.add(vista);
-        vista.setVisible(true);
+        if(vistaPelicula == null || vistaPelicula.isClosed()){
+            vistaPelicula = new Vistas.VistaPelicula();
+            Escritorio.add(vistaPelicula);
+            vistaPelicula.setVisible(true);
+        }; 
     }//GEN-LAST:event_jmi_gestion_peliculasActionPerformed
 
     private void jmi_gestion_funcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_funcionesActionPerformed
-        VistaFunciones vista = new VistaFunciones();
-        Escritorio.add(vista);
-        vista.setVisible(true);
+        if(vistaFunciones == null || vistaFunciones.isClosed()){
+            vistaFunciones = new Vistas.VistaFunciones();
+            Escritorio.add(vistaFunciones);
+            vistaFunciones.setVisible(true);
+        }; 
     }//GEN-LAST:event_jmi_gestion_funcionesActionPerformed
 
     private void jmi_gestion_salasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_gestion_salasActionPerformed
-        VistaSalas vista = new VistaSalas();
-        Escritorio.add(vista);
-        vista.setVisible(true);
+        if(vistaSalas == null || vistaSalas.isClosed()){
+            vistaSalas = new Vistas.VistaSalas();
+            Escritorio.add(vistaSalas);
+            vistaSalas.setVisible(true);
+        };
     }//GEN-LAST:event_jmi_gestion_salasActionPerformed
 
     private void jmi_venta_presencialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_venta_presencialActionPerformed
-        VistaVentaPresencial vista = new VistaVentaPresencial();
-        Escritorio.add(vista);
-        vista.setVisible(true);
+        if(vistaVentaPresencial == null || vistaVentaPresencial.isClosed()){
+            vistaVentaPresencial = new Vistas.VistaVentaPresencial();
+            Escritorio.add(vistaVentaPresencial);
+            vistaVentaPresencial.setVisible(true);
+        };
     }//GEN-LAST:event_jmi_venta_presencialActionPerformed
 
     private void jmi_venta_onlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_venta_onlineActionPerformed
-        VistaVentaOnline vista = new VistaVentaOnline();
-        Escritorio.add(vista);
-        vista.setVisible(true);
+        if(vistaVentaOnline == null || vistaVentaOnline.isClosed()){
+            vistaVentaOnline = new Vistas.VistaVentaOnline();
+            Escritorio.add(vistaVentaOnline);
+            vistaVentaOnline.setVisible(true);
+        };
     }//GEN-LAST:event_jmi_venta_onlineActionPerformed
 
     private void jmi_tickets_entradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_tickets_entradasActionPerformed
-        VistaEntradas vista = new VistaEntradas();
-        Escritorio.add(vista);
-        vista.setVisible(true);
+        if(vistaEntradas == null || vistaEntradas.isClosed()){
+            vistaEntradas = new Vistas.VistaEntradas();
+            Escritorio.add(vistaEntradas);
+            vistaEntradas.setVisible(true);
+        };
     }//GEN-LAST:event_jmi_tickets_entradasActionPerformed
 
     /**
