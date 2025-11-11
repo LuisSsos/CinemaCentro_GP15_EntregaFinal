@@ -13,7 +13,7 @@ import java.sql.SQLException;
 **/
 
 public class Conexion {
-    private static final String URL = "jdbc:mariadb://localhost:3306/cinemacentro";
+    private static final String URL = "jdbc:mariadb://localhost:3306/cinemacentrofinal";
     private static final String USER = "root";
     private static final String PASS = "";
     
