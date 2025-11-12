@@ -18,7 +18,6 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
 
     public VistaTicketsVentas() {
         initComponents();
-        initComponents();
 
         setClosable(true);
         setIconifiable(true);
@@ -85,7 +84,7 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
                     t.getIdcomprador(),
                     t.getFechacompra(),
                     t.getPreciounitario(),
-                    t.getCantidad(), 
+                    t.getCantidad(),
                     t.getMontototal(),
                     t.getCanal(),
                     t.getMediopago()
@@ -104,10 +103,10 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
         txtIdComprador.setText(modelo.getValueAt(fila, 1).toString());
         dateCompra.setDate((java.util.Date) modelo.getValueAt(fila, 2));
         txtPrecioUnitario.setText(modelo.getValueAt(fila, 3).toString());
-        txtMontoTotal.setText(modelo.getValueAt(fila, 4).toString());
-        cbCanal.setSelectedItem(modelo.getValueAt(fila, 5).toString());
-        cbMedioPago.setSelectedItem(modelo.getValueAt(fila, 6).toString());
-        txtCantidad.setText(modelo.getValueAt(fila, 7).toString());
+        txtCantidad.setText(modelo.getValueAt(fila, 4).toString());
+        txtMontoTotal.setText(modelo.getValueAt(fila, 5).toString());
+        cbCanal.setSelectedItem(modelo.getValueAt(fila, 6).toString());
+        cbMedioPago.setSelectedItem(modelo.getValueAt(fila, 7).toString());
     }
 
     /**
