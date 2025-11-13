@@ -138,7 +138,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbFormatoIdioma = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(1000, 700));
 
@@ -256,7 +256,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("|1D| |2D| |3D| |4D| |5D| |6D| |7D| |8D| |9D| |10D| |11D| |12D| 13D| ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbFormatoIdioma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout pnl_vta_presencialLayout = new javax.swing.GroupLayout(pnl_vta_presencial);
         pnl_vta_presencial.setLayout(pnl_vta_presencialLayout);
@@ -326,7 +326,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(cbPeliculas, 0, 259, Short.MAX_VALUE)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(cbFormatoIdioma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGap(53, 53, 53)))
                             .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -382,7 +382,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbFormatoIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -574,10 +574,10 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCompra;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbFechasDisponibles;
+    private javax.swing.JComboBox<String> cbFormatoIdioma;
     private javax.swing.JComboBox<String> cbHoras;
     private javax.swing.JComboBox<String> cbMedioPago;
     private javax.swing.JComboBox<String> cbPeliculas;
-    private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateComprador;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
