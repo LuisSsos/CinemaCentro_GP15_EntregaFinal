@@ -1,20 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package Vistas;
 
-/**
- *
- * @author Lucas
- */
+import Modelo.Comprador;
+import Persistencia.CompradorData;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class VistaVentaPresencial extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VistaVentaPresencial
-     */
+    private final CompradorData compradorDao = new CompradorData();
+    private Comprador compradorActual = null;
+
     public VistaVentaPresencial() {
         initComponents();
+
+        txtNombreComprador.setEnabled(false);
+        jDateComprador.setEnabled(false);
+        btnAgregarComprador.setEnabled(false);
+
+    }
+
+    private Integer parseEntero(String s) {
+        try {
+            return Integer.parseInt(s.trim());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private boolean esSoloTexto(String texto) {
+        if (texto == null || texto.trim().isEmpty()) {
+            return false;
+        }
+        for (char c : texto.toCharArray()) {
+            if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -41,10 +69,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         lblNombreComprador = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         txtNombreComprador = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        lblApellidoComprador = new javax.swing.JLabel();
+        jDateComprador = new com.toedter.calendar.JDateChooser();
         cbFechasDisponibles = new javax.swing.JComboBox<>();
-        txtApellidoComprador = new javax.swing.JTextField();
         cbHoras = new javax.swing.JComboBox<>();
         lblPeliculaTitulo = new javax.swing.JLabel();
         lblSelectAsiento = new javax.swing.JLabel();
@@ -113,25 +139,15 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         lblFecha.setText("Funciones Disponibles");
 
         lblNombreComprador.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblNombreComprador.setText("Nombre:");
+        lblNombreComprador.setText("Nombre y Apellido:");
 
         btnCancelar.setText("Cancelar y Limpiar");
 
-        txtNombreComprador.setText("Nombre Cliente");
+        txtNombreComprador.setText("Nombre y Apellido Cliente");
 
-        jDateChooser1.setMinSelectableDate(new java.util.Date(-62135755096000L));
-
-        lblApellidoComprador.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblApellidoComprador.setText("Apellido: ");
+        jDateComprador.setMinSelectableDate(new java.util.Date(-62135755096000L));
 
         cbFechasDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        txtApellidoComprador.setText("Apellido Cliente");
-        txtApellidoComprador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidoCompradorActionPerformed(evt);
-            }
-        });
 
         cbHoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -143,11 +159,21 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         lblSelectAsiento.setText("Seleccionar Asientos");
 
         btnBuscarComprador.setText("Buscar");
+        btnBuscarComprador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCompradorActionPerformed(evt);
+            }
+        });
 
         lblFechaNac.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblFechaNac.setText("Fecha de Nacimiento");
 
         btnAgregarComprador.setText("AgregarComprador");
+        btnAgregarComprador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarCompradorActionPerformed(evt);
+            }
+        });
 
         lblFormato.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblFormato.setText("Formato: ");
@@ -212,62 +238,89 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         pnl_vta_presencial.setLayout(pnl_vta_presencialLayout);
         pnl_vta_presencialLayout.setHorizontalGroup(
             pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_vta_presencialLayout.createSequentialGroup()
+            .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                        .addComponent(lblTituloCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                        .addComponent(lblMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cbMedioPago, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                        .addComponent(lblPrecio)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtFieldPrecioUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblCantidad)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_vta_presencialLayout.createSequentialGroup()
+                                .addComponent(btnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(302, 302, 302)))
+                        .addGap(72, 72, 72))
                     .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                         .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPeliculaTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblNombreComprador)
+                                            .addComponent(lblDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(30, 30, 30)
+                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                        .addGap(268, 268, 268)
+                                        .addComponent(btnBuscarComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                            .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lblTituloCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                                    .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(lblApellidoComprador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(lblNombreComprador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(lblDNI, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGap(50, 50, 50)
-                                                    .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(txtFieldDNI)
-                                                        .addComponent(txtNombreComprador)
-                                                        .addComponent(txtApellidoComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                            .addGap(27, 27, 27)
-                                            .addComponent(btnBuscarComprador))
                                         .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                                             .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnAgregarComprador)))
+                                            .addComponent(jDateComprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(btnAgregarComprador))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_vta_presencialLayout.createSequentialGroup()
+                                            .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(lblPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(lblFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                                    .addComponent(rb3D)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(rb2D)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(jLabel1)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(rbSi, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(rbNo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(cbPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cbPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                                .addComponent(rb3D)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(rb2D)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabel1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(rbSi, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(rbNo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                                                 .addComponent(lblFecha)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(cbFechasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                                .addGap(27, 27, 27)
-                                                .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(cbFechasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(cbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(27, 27, 27))
@@ -275,63 +328,35 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                                 .addComponent(lblSelectAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(330, 330, 330)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                .addComponent(lblMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbMedioPago, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                .addComponent(lblPrecio)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFieldPrecioUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCantidad)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_vta_presencialLayout.createSequentialGroup()
-                        .addComponent(btnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(302, 302, 302)))
-                .addGap(72, 72, 72))
+                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6)
+                            .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(54, 54, 54))))
         );
         pnl_vta_presencialLayout.setVerticalGroup(
             pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_vta_presencialLayout.createSequentialGroup()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(16, 16, 16)
                 .addComponent(lblTituloCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarComprador))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBuscarComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblApellidoComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtApellidoComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreComprador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAgregarComprador)
                         .addComponent(lblFechaNac)))
@@ -378,7 +403,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                             .addComponent(btnCancelar)
                             .addComponent(btnSalir)))
                     .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
+                        .addGap(38, 38, 38)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,7 +413,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -409,13 +434,135 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldDNIActionPerformed
 
-    private void txtApellidoCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoCompradorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidoCompradorActionPerformed
-
     private void rbSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbSiActionPerformed
+
+    private void btnBuscarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCompradorActionPerformed
+
+        Integer dni = parseEntero(txtFieldDNI.getText());
+        if (dni == null) {
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI de 8 digitos");
+            txtFieldDNI.requestFocus();
+            return;
+        }
+
+        try {
+            Comprador c = compradorDao.buscarPorDni(dni);
+            if (c == null) {
+                JOptionPane.showMessageDialog(this,
+                        "No existe un comprador con ese DNI.\nComplete los datos para registrarlo.");
+
+                compradorActual = null;
+                txtNombreComprador.setText("");
+                jDateComprador.setDate(null);
+
+                txtNombreComprador.setEnabled(true);
+                jDateComprador.setEnabled(true);
+                btnAgregarComprador.setEnabled(true);
+                return;
+            }
+
+            compradorActual = c;
+            txtNombreComprador.setText(c.getNombre());
+            if (c.getFecha_nac() != null) {
+                jDateComprador.setDate(c.getFecha_nac());
+            } else {
+                jDateComprador.setDate(null);
+            }
+
+            txtNombreComprador.setEnabled(false);
+            jDateComprador.setEnabled(false);
+            btnAgregarComprador.setEnabled(false);
+
+            JOptionPane.showMessageDialog(this, "Cliente encontrado: " + c.getNombre());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al buscar Cliente: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnBuscarCompradorActionPerformed
+
+    private void btnAgregarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCompradorActionPerformed
+        String dniTexto = txtFieldDNI.getText().trim();
+        if (dniTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el DNI del Cliente");
+            txtFieldDNI.requestFocus();
+            return;
+        }
+
+        if (dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
+            txtFieldDNI.requestFocus();
+            return;
+        }
+
+        Integer dni = null;
+        try {
+            dni = Integer.parseInt(dniTexto);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
+            txtFieldDNI.requestFocus();
+            return;
+        }
+
+        String nombre = txtNombreComprador.getText().trim();
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el nombre del Cliente");
+            txtNombreComprador.requestFocus();
+            return;
+        }
+
+        if (!esSoloTexto(nombre)) {
+            JOptionPane.showMessageDialog(this, "El nombre solo puede contener letras y espacios");
+            txtNombreComprador.requestFocus();
+            txtNombreComprador.selectAll();
+            return;
+        }
+
+        java.util.Date fechaNac = jDateComprador.getDate();
+        if (fechaNac == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione la fecha de nacimiento");
+            jDateComprador.requestFocus();
+            return;
+        }
+
+        if (fechaNac.after(new java.util.Date())) {
+            JOptionPane.showMessageDialog(this, "La Fecha de nacimiento no puede ser mayor a la actual!");
+            jDateComprador.requestFocus();
+            return;
+        }
+
+        try {
+
+            Comprador existente = compradorDao.buscarPorDni(dni);
+            if (existente != null) {
+                JOptionPane.showMessageDialog(this, "Ya existe un cliente con ese DNI");
+                return;
+            }
+
+            Comprador nuevo = new Comprador();
+            nuevo.setDni(dni);
+            nuevo.setNombre(nombre);
+            nuevo.setFecha_nac(fechaNac);
+
+            compradorDao.crear(nuevo);
+
+            JOptionPane.showMessageDialog(this, "Cliente agregado correctamente");
+
+            txtNombreComprador.setEnabled(false);
+            jDateComprador.setEnabled(false);
+            btnAgregarComprador.setEnabled(false);
+
+            compradorActual = nuevo;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el Cliente: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_btnAgregarCompradorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -430,14 +577,13 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbHoras;
     private javax.swing.JComboBox<String> cbMedioPago;
     private javax.swing.JComboBox<String> cbPeliculas;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateComprador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel lblApellidoComprador;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblDNI;
     private javax.swing.JLabel lblFecha;
@@ -458,7 +604,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rb3D;
     private javax.swing.JRadioButton rbNo;
     private javax.swing.JRadioButton rbSi;
-    private javax.swing.JTextField txtApellidoComprador;
     private javax.swing.JTextField txtFieldCantidad;
     private javax.swing.JTextField txtFieldDNI;
     private javax.swing.JTextField txtFieldPrecioUnit;
