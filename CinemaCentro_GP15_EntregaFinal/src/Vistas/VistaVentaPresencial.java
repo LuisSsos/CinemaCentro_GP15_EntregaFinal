@@ -1,11 +1,26 @@
 package Vistas;
 
+import Modelo.Asiento;
 import Modelo.Comprador;
-import Persistencia.CompradorData;
+import Modelo.DetalleTicket;
+import Modelo.Funcion;
+import Modelo.Pelicula;
+import Modelo.Sala;
+import Modelo.TicketCompra;
 
+import Persistencia.AsientoData;
+import Persistencia.CompradorData;
+import Persistencia.DetalleTicketData;
+import Persistencia.FuncionData;
+import Persistencia.PeliculaData;
+import Persistencia.SalaData;
+import Persistencia.TicketCompraData;
+
+        
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -15,16 +30,20 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
 
     private final CompradorData compradorDao = new CompradorData();
     private Comprador compradorActual = null;
+    private final PeliculaData peliculaDao = new PeliculaData();
+    private List<Pelicula> listaPeliculas = new ArrayList<>();
+    private final FuncionData funcionDao = new FuncionData();
+    private List<Funcion> listaFunciones = new ArrayList<>();
 
     public VistaVentaPresencial() {
         initComponents();
-
+        cargarPeliculas();
         txtNombreComprador.setEnabled(false);
         jDateComprador.setEnabled(false);
         btnAgregarComprador.setEnabled(false);
 
     }
-
+    //Cliente
     private Integer parseEntero(String s) {
         try {
             return Integer.parseInt(s.trim());
@@ -44,6 +63,35 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         }
         return true;
     }
+    
+    //Peliculas
+    private void cargarPeliculas() {
+    try {
+        listaPeliculas = peliculaDao.listarPeliculas();
+        cbPeliculas.removeAllItems();
+
+        boolean hayPeliculas = false;
+        for (Pelicula p : listaPeliculas) {
+            if (p.isEnCartelera()) {
+                cbPeliculas.addItem(p.getTitulo());
+                hayPeliculas = true;
+            }
+        }
+
+        if (!hayPeliculas) {
+            cbPeliculas.addItem("No hay peliculas en cartelera");
+            cbPeliculas.setEnabled(false);
+        } else {
+            cbPeliculas.setEnabled(true);
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Error al cargar las peliculas: " + e.getMessage(),
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,14 +102,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnGroup3D2D = new javax.swing.ButtonGroup();
-        btnGroupSubtitulos = new javax.swing.ButtonGroup();
         pnl_vta_presencial = new javax.swing.JPanel();
-        rb2D = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
-        rbSi = new javax.swing.JRadioButton();
         lblTituloCliente = new javax.swing.JLabel();
-        rbNo = new javax.swing.JRadioButton();
         btnSalir = new javax.swing.JButton();
         lblDNI = new javax.swing.JLabel();
         txtFieldDNI = new javax.swing.JTextField();
@@ -79,7 +121,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         btnAgregarComprador = new javax.swing.JButton();
         lblFormato = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
-        rb3D = new javax.swing.JRadioButton();
         lblPago = new javax.swing.JLabel();
         lblPelicula = new javax.swing.JLabel();
         lblMetodoPago = new javax.swing.JLabel();
@@ -97,31 +138,15 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(1000, 700));
 
         pnl_vta_presencial.setPreferredSize(new java.awt.Dimension(1000, 699));
 
-        btnGroup3D2D.add(rb2D);
-        rb2D.setText("2D");
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jLabel1.setText("Idioma");
-
-        btnGroupSubtitulos.add(rbSi);
-        rbSi.setText("Español");
-        rbSi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbSiActionPerformed(evt);
-            }
-        });
-
         lblTituloCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTituloCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloCliente.setText("Cliente");
-
-        btnGroupSubtitulos.add(rbNo);
-        rbNo.setText("Ingles");
 
         btnSalir.setText("Salir");
 
@@ -176,21 +201,18 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         });
 
         lblFormato.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblFormato.setText("Formato: ");
+        lblFormato.setText("Formato e Idioma: ");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Venta de Entradas Mostrador");
-
-        btnGroup3D2D.add(rb3D);
-        rb3D.setText("3D");
 
         lblPago.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblPago.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPago.setText("Pago y Confirmacion");
 
         lblPelicula.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblPelicula.setText("Pelicula:");
+        lblPelicula.setText("Cartelera");
 
         lblMetodoPago.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblMetodoPago.setText("Metodo de Pago");
@@ -217,7 +239,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         btnCompra.setText("Confirmar Compra");
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 51));
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Pantalla");
         jLabel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 0, 204)));
@@ -233,6 +255,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("|1D| |2D| |3D| |4D| |5D| |6D| |7D| |8D| |9D| |10D| |11D| |12D| 13D| ");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout pnl_vta_presencialLayout = new javax.swing.GroupLayout(pnl_vta_presencial);
         pnl_vta_presencial.setLayout(pnl_vta_presencialLayout);
@@ -275,58 +299,45 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                                 .addGap(302, 302, 302)))
                         .addGap(72, 72, 72))
                     .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPeliculaTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblPeliculaTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblNombreComprador)
-                                            .addComponent(lblDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(30, 30, 30)
-                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                        .addGap(268, 268, 268)
-                                        .addComponent(btnBuscarComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                            .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jDateComprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btnAgregarComprador))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_vta_presencialLayout.createSequentialGroup()
-                                            .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lblPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(lblFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                                    .addComponent(rb3D)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(rb2D)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(jLabel1)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(rbSi, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(rbNo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(cbPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                        .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                                .addComponent(lblFecha)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(cbFechasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(27, 27, 27))
+                                    .addComponent(lblNombreComprador)
+                                    .addComponent(lblDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                .addComponent(lblSelectAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(330, 330, 330)))
+                                .addGap(268, 268, 268)
+                                .addComponent(btnBuscarComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                    .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jDateComprador, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnAgregarComprador))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_vta_presencialLayout.createSequentialGroup()
+                                    .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cbPeliculas, 0, 259, Short.MAX_VALUE)
+                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGap(53, 53, 53)))
+                            .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
+                                        .addComponent(lblFecha)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cbFechasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblSelectAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
@@ -357,8 +368,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDateComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAgregarComprador)
+                    .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnAgregarComprador, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblFechaNac)))
                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
@@ -370,12 +381,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                             .addComponent(cbPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rb3D)
-                            .addComponent(rb2D)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rbSi)
-                            .addComponent(rbNo)
-                            .addComponent(lblFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -434,10 +441,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldDNIActionPerformed
 
-    private void rbSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbSiActionPerformed
-
     private void btnBuscarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCompradorActionPerformed
 
         Integer dni = parseEntero(txtFieldDNI.getText());
@@ -450,8 +453,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         try {
             Comprador c = compradorDao.buscarPorDni(dni);
             if (c == null) {
-                JOptionPane.showMessageDialog(this,
-                        "No existe un comprador con ese DNI.\nComplete los datos para registrarlo.");
+                JOptionPane.showMessageDialog(this,"No existe un comprador con ese DNI.\nComplete los datos para registrarlo.");
 
                 compradorActual = null;
                 txtNombreComprador.setText("");
@@ -570,15 +572,13 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscarComprador;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCompra;
-    private javax.swing.ButtonGroup btnGroup3D2D;
-    private javax.swing.ButtonGroup btnGroupSubtitulos;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbFechasDisponibles;
     private javax.swing.JComboBox<String> cbHoras;
     private javax.swing.JComboBox<String> cbMedioPago;
     private javax.swing.JComboBox<String> cbPeliculas;
+    private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateComprador;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -600,10 +600,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblTituloCliente;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JPanel pnl_vta_presencial;
-    private javax.swing.JRadioButton rb2D;
-    private javax.swing.JRadioButton rb3D;
-    private javax.swing.JRadioButton rbNo;
-    private javax.swing.JRadioButton rbSi;
     private javax.swing.JTextField txtFieldCantidad;
     private javax.swing.JTextField txtFieldDNI;
     private javax.swing.JTextField txtFieldPrecioUnit;
