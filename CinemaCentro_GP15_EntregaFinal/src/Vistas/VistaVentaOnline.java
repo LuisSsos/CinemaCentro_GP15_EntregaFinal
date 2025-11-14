@@ -26,21 +26,379 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnl_vta_online = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
+        pnl_Asientos = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblTituloCliente = new javax.swing.JLabel();
+        lblDNI = new javax.swing.JLabel();
+        txtFieldDNI = new javax.swing.JTextField();
+        lblNombreComprador = new javax.swing.JLabel();
+        txtNombreComprador = new javax.swing.JTextField();
+        lblFechaNac = new javax.swing.JLabel();
+        jDateComprador = new com.toedter.calendar.JDateChooser();
+        btnAgregarComprador = new javax.swing.JButton();
+        btnBuscarComprador = new javax.swing.JButton();
+        lblEmail = new javax.swing.JLabel();
+        lblContraseña = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        lblPeliculaTitulo = new javax.swing.JLabel();
+        lblPelicula = new javax.swing.JLabel();
+        lblFormato = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
+        lblSelectAsiento = new javax.swing.JLabel();
+        cbPeliculas = new javax.swing.JComboBox<>();
+        cbFormatoIdioma = new javax.swing.JComboBox<>();
+        cbFechasDisponibles = new javax.swing.JComboBox<>();
+        cbHoras = new javax.swing.JComboBox<>();
+        lblPago = new javax.swing.JLabel();
+        pwdFieldContraseña = new javax.swing.JPasswordField();
+        lblMetodoPago = new javax.swing.JLabel();
+        cbMedioPago = new javax.swing.JComboBox<>();
+        lblPrecio = new javax.swing.JLabel();
+        txtFieldPrecioUnit = new javax.swing.JTextField();
+        lblCantidad = new javax.swing.JLabel();
+        txtFieldCantidad = new javax.swing.JTextField();
+        lblTotal = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
+        btnCompra = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(1000, 700));
+
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Venta de Entradas Online");
+
+        jLabel1.setText("|1D| |2D| |3D| |4D| |5D| |6D| |7D| |8D| |9D| |10D| |11D| |12D| 13D| ");
+
+        jLabel2.setText("|1C|  |2C|  |3C|  |4C|  |5C|  |6C|  |7C|  |8C|  |9C|  |10C|  |11C|  ");
+
+        jLabel3.setText("|1B| |2B| |3B| |4B| |5B| |6B| |7B| |8B| |9B| |10B| |11B| |12B|   ");
+
+        jLabel4.setText("|1A| |2A| |3A| |4A| |5A| |6A| |7A| |8A| |9A| |10A| |11A| ");
+
+        jLabel5.setBackground(new java.awt.Color(0, 0, 51));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Pantalla");
+        jLabel5.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 0, 255)));
+
+        javax.swing.GroupLayout pnl_AsientosLayout = new javax.swing.GroupLayout(pnl_Asientos);
+        pnl_Asientos.setLayout(pnl_AsientosLayout);
+        pnl_AsientosLayout.setHorizontalGroup(
+            pnl_AsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_AsientosLayout.createSequentialGroup()
+                .addGroup(pnl_AsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_AsientosLayout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(jLabel1))
+                    .addGroup(pnl_AsientosLayout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addGroup(pnl_AsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnl_AsientosLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addGroup(pnl_AsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))))
+                .addContainerGap(77, Short.MAX_VALUE))
+        );
+        pnl_AsientosLayout.setVerticalGroup(
+            pnl_AsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_AsientosLayout.createSequentialGroup()
+                .addGap(238, 238, 238)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        lblTituloCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTituloCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloCliente.setText("Cliente");
+
+        lblDNI.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblDNI.setText("DNI:");
+
+        lblNombreComprador.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblNombreComprador.setText("Nombre y apellido:");
+
+        lblFechaNac.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblFechaNac.setText("Fecha de nacimiento:");
+
+        btnAgregarComprador.setText("Agregar Comprador");
+
+        btnBuscarComprador.setText("Buscar");
+        btnBuscarComprador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCompradorActionPerformed(evt);
+            }
+        });
+
+        lblEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblEmail.setText("Email:");
+
+        lblContraseña.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblContraseña.setText("Contraseña:");
+
+        lblPeliculaTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblPeliculaTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPeliculaTitulo.setText("Pelicula");
+
+        lblPelicula.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPelicula.setText("Cartelera");
+
+        lblFormato.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblFormato.setText("Formato e idioma");
+
+        lblFecha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblFecha.setText("Funciones Disponibles");
+
+        lblSelectAsiento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblSelectAsiento.setText("Seleccionar Asientos");
+
+        cbPeliculas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbFormatoIdioma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbFechasDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbHoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblPago.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblPago.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPago.setText("Pago y Confirmacion");
+
+        pwdFieldContraseña.setText("jPasswordField1");
+
+        lblMetodoPago.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblMetodoPago.setText("Metodo de Pago");
+
+        cbMedioPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPrecio.setText("Precio Unitario:");
+
+        lblCantidad.setText("Cantidad:");
+
+        lblTotal.setText("Total:");
+
+        btnCompra.setText("Confirmar Compra");
+
+        btnCancelar.setText("Cancelar y Limpiar");
+
+        btnSalir.setText("Salir");
+
+        javax.swing.GroupLayout pnl_vta_onlineLayout = new javax.swing.GroupLayout(pnl_vta_online);
+        pnl_vta_online.setLayout(pnl_vta_onlineLayout);
+        pnl_vta_onlineLayout.setHorizontalGroup(
+            pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_vta_onlineLayout.createSequentialGroup()
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_vta_onlineLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pnl_vta_onlineLayout.createSequentialGroup()
+                                .addComponent(btnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnl_vta_onlineLayout.createSequentialGroup()
+                                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblMetodoPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblPeliculaTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblSelectAsiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblFormato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblNombreComprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblDNI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblTituloCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(pnl_vta_onlineLayout.createSequentialGroup()
+                                        .addComponent(lblPrecio)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldPrecioUnit)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_vta_onlineLayout.createSequentialGroup()
+                                        .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnBuscarComprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_vta_onlineLayout.createSequentialGroup()
+                                        .addComponent(jDateComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnAgregarComprador))
+                                    .addComponent(txtNombreComprador, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_vta_onlineLayout.createSequentialGroup()
+                                        .addComponent(cbFechasDisponibles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(cbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbPeliculas, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbFormatoIdioma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pwdFieldContraseña, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbMedioPago, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_vta_onlineLayout.createSequentialGroup()
+                                        .addComponent(lblCantidad)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTotal))))))
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnl_Asientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnl_vta_onlineLayout.setVerticalGroup(
+            pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnl_Asientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnl_vta_onlineLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitulo)
+                .addGap(18, 18, 18)
+                .addComponent(lblTituloCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jDateComprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregarComprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pwdFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblPeliculaTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFormatoIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFechasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblSelectAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbMedioPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldPrecioUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnl_vta_onlineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(58, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addComponent(pnl_vta_online, javax.swing.GroupLayout.PREFERRED_SIZE, 497, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addComponent(pnl_vta_online, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCompradorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarCompradorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarComprador;
+    private javax.swing.JButton btnBuscarComprador;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCompra;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cbFechasDisponibles;
+    private javax.swing.JComboBox<String> cbFormatoIdioma;
+    private javax.swing.JComboBox<String> cbHoras;
+    private javax.swing.JComboBox<String> cbMedioPago;
+    private javax.swing.JComboBox<String> cbPeliculas;
+    private com.toedter.calendar.JDateChooser jDateComprador;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblCantidad;
+    private javax.swing.JLabel lblContraseña;
+    private javax.swing.JLabel lblDNI;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblFechaNac;
+    private javax.swing.JLabel lblFormato;
+    private javax.swing.JLabel lblMetodoPago;
+    private javax.swing.JLabel lblNombreComprador;
+    private javax.swing.JLabel lblPago;
+    private javax.swing.JLabel lblPelicula;
+    private javax.swing.JLabel lblPeliculaTitulo;
+    private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblSelectAsiento;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTituloCliente;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JPanel pnl_Asientos;
+    private javax.swing.JPanel pnl_vta_online;
+    private javax.swing.JPasswordField pwdFieldContraseña;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtFieldCantidad;
+    private javax.swing.JTextField txtFieldDNI;
+    private javax.swing.JTextField txtFieldPrecioUnit;
+    private javax.swing.JTextField txtNombreComprador;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
