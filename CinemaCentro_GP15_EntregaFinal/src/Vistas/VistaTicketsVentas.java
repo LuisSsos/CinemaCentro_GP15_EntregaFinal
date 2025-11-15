@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.util.List;
+import Modelo.Comprador;
+import Persistencia.CompradorData;
 import com.toedter.calendar.JDateChooser;
 
 /**
@@ -15,6 +17,7 @@ import com.toedter.calendar.JDateChooser;
 public class VistaTicketsVentas extends javax.swing.JInternalFrame {
 
     private TicketCompraData ticketData;
+    private CompradorData compradorData;
 
     public VistaTicketsVentas() {
         initComponents();
@@ -36,7 +39,7 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
         ));
 
         ticketData = new TicketCompraData();
-
+        compradorData = new CompradorData();
         configurarTabla();
 
         jtTickets.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,7 +207,7 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("ID TICKET");
 
-        jLabel3.setText("ID COMPRADOR");
+        jLabel3.setText("DNI Del Comprador");
 
         jLabel6.setText("FECHA COMPRA");
 
@@ -274,7 +277,7 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -437,31 +440,46 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
         if (txtIdComprador.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar el ID del comprador");
+
+            JOptionPane.showMessageDialog(this, "Debe ingresar el DNI del comprador");
             return;
         }
 
         try {
-            int idComprador = Integer.parseInt(txtIdComprador.getText().trim());
 
-            List<TicketCompra> tickets = ticketData.buscarPorComprador(idComprador);
+            int dniComprador = Integer.parseInt(txtIdComprador.getText().trim());
 
-            if (tickets.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No se encontraron tickets para este comprador");
+
+            Comprador comprador = compradorData.buscarPorDni(dniComprador);
+
+            
+            if (comprador == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró ningún comprador con ese DNI");
                 limpiarCampos();
+                ((javax.swing.table.DefaultTableModel) jtTickets.getModel()).setRowCount(0); // Limpia la tabla
                 return;
             }
 
-            
+
+            int idCompradorReal = comprador.getIdcomprador();
+            List<TicketCompra> tickets = ticketData.buscarPorComprador(idCompradorReal);
+
+            if (tickets.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El comprador con DNI " + dniComprador + " no tiene tickets registrados");
+                limpiarCampos();
+                ((javax.swing.table.DefaultTableModel) jtTickets.getModel()).setRowCount(0); // Limpia la tabla
+                return;
+            }
+
+
             javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jtTickets.getModel();
             modelo.setRowCount(0);
 
             for (TicketCompra t : tickets) {
                 Object[] fila = {
                     t.getIdticket(),
-                    t.getIdcomprador(),
+                    t.getIdcomprador(), 
                     t.getFechacompra(),
                     t.getPreciounitario(),
                     t.getCantidad(),
@@ -472,10 +490,10 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
                 modelo.addRow(fila);
             }
 
-            JOptionPane.showMessageDialog(this, "Se encontraron " + tickets.size() + " tickets del comprador " + idComprador);
+            JOptionPane.showMessageDialog(this, "Se encontraron " + tickets.size() + " tickets del comprador con DNI " + dniComprador);
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El ID debe ser numérico");
+            JOptionPane.showMessageDialog(this, "El DNI debe ser numérico");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al buscar: " + ex.getMessage());
         }
