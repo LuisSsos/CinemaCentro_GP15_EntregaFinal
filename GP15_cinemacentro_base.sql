@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-11-2025 a las 22:28:23
+-- Tiempo de generación: 15-11-2025 a las 23:16:11
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -112,13 +112,6 @@ CREATE TABLE `sala` (
   `capacidad` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `sala`
---
-
-INSERT INTO `sala` (`nro_sala`, `apta_3d`, `capacidad`, `estado`) VALUES
-(1, 1, 200, 1);
 
 -- --------------------------------------------------------
 
@@ -229,7 +222,7 @@ ALTER TABLE `pelicula`
 -- AUTO_INCREMENT de la tabla `sala`
 --
 ALTER TABLE `sala`
-  MODIFY `nro_sala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `nro_sala` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket_compra`
@@ -245,7 +238,7 @@ ALTER TABLE `ticket_compra`
 -- Filtros para la tabla `asiento`
 --
 ALTER TABLE `asiento`
-  ADD CONSTRAINT `fk_asiento_funcion` FOREIGN KEY (`id_funcion`) REFERENCES `funcion` (`id_funcion`);
+  ADD CONSTRAINT `fk_asiento_funcion` FOREIGN KEY (`id_funcion`) REFERENCES `funcion` (`id_funcion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `detalle_ticket`
