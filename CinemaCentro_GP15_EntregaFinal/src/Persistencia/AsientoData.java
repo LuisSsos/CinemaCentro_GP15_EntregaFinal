@@ -81,10 +81,9 @@ public class AsientoData {
     private Asiento map(ResultSet rs) throws SQLException {
         Asiento a = new Asiento();
         a.setIdasiento(rs.getInt("id_asiento"));
-        a.setNrosala(rs.getInt("nro_sala"));
         a.setFila(rs.getString("fila").charAt(0));
         a.setNumero(rs.getInt("numero"));
-        a.setEstado("LIBRE".equals(rs.getString("estado")));
+        a.setEstado(rs.getBoolean("estado"));
         return a;
     }
 }
