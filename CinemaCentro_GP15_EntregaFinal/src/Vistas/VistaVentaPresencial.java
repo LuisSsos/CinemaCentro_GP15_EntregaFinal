@@ -38,6 +38,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         initComponents();
         initComponents();
         cargarPeliculas();
+        cargarMetodosPago();
         txtNombreComprador.setEnabled(false);
         jDateComprador.setEnabled(false);
         btnAgregarComprador.setEnabled(false);
@@ -74,6 +75,10 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         listaAsientos.add(E4);
         listaAsientos.add(E5);
         listaAsientos.add(E6);
+
+        for (javax.swing.JToggleButton b : listaAsientos) {
+    b.addActionListener(e -> actualizarCantidadYTotal());
+}
 
     }
 
@@ -286,12 +291,43 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                 }
             }
 
+        txtPrecioUnit.setText(String.valueOf(funcionSeleccionada.getPreciotipo()));
+        actualizarCantidadYTotal();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar los asientos: " + e.getMessage());
             e.printStackTrace();
         }
+
     }
 
+    //Pago
+    private void cargarMetodosPago() {
+        cbMedioPago.removeAllItems();
+        cbMedioPago.addItem("Efectivo");
+        cbMedioPago.addItem("Tarjeta de Credito");
+        cbMedioPago.addItem("Tarjeta de Debito");
+        cbMedioPago.addItem("Mercado Pago");
+    }
+
+    private void actualizarCantidadYTotal() {
+    int cantidad = 0;
+    for (javax.swing.JToggleButton b : listaAsientos) {
+        if (b.isSelected()) cantidad++;
+    }
+
+    txtCantidad.setText(String.valueOf(cantidad));
+
+    try {
+        double precio = Double.parseDouble(txtPrecioUnit.getText());
+        double total = cantidad * precio;
+        txtTotal.setText(String.format("%.2f", total));
+    } catch (NumberFormatException e) {
+        txtTotal.setText("");
+    }
+}
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -363,6 +399,11 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         E4 = new javax.swing.JToggleButton();
         E5 = new javax.swing.JToggleButton();
         E6 = new javax.swing.JToggleButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -797,8 +838,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         try {
             Comprador c = compradorDao.buscarPorDni(dni);
             if (c == null) {
-                JOptionPane.showMessageDialog(this,
-                        "No existe un cliente con ese DNI.\nComplete los datos para registrarlo.");
+                JOptionPane.showMessageDialog(this, "No existe un cliente con ese DNI.\nComplete los datos para registrarlo.");
 
                 compradorActual = null;
                 txtNombreComprador.setText("");
@@ -905,8 +945,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
             e.printStackTrace();
         }
-
-
     }//GEN-LAST:event_btnAgregarCompradorActionPerformed
 
 
