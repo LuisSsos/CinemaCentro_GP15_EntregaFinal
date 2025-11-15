@@ -82,4 +82,21 @@ public class SalaData {
         }
     }
     
+    public List<Sala> listarTodas() throws SQLException {
+        String sql = "SELECT * FROM sala ORDER BY nro_sala";
+        try (PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            List<Sala> salas = new ArrayList<>();
+            while(rs.next()) {
+                Sala s = new Sala();
+                s.setNroSala(rs.getInt("nro_sala"));
+                s.setApta3D(rs.getBoolean("apta_3d"));
+                s.setCapacidad(rs.getInt("capacidad"));
+                s.setEstado(rs.getBoolean("estado"));
+                salas.add(s);
+            }
+            return salas;
+        }
+    }
+    
 }

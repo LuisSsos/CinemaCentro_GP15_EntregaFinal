@@ -120,4 +120,25 @@ public class PeliculaData {
         }
         return peliculas;
     }
+    
+    public List<Pelicula> listarTodas() throws SQLException {
+        String sql = "SELECT * FROM pelicula ORDER BY id_pelicula";
+        try (PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            List<Pelicula> peliculas = new ArrayList<>();
+            while(rs.next()) {
+                Pelicula p = new Pelicula();
+                p.setIdPelicula(rs.getInt("id_pelicula"));
+                p.setTitulo(rs.getString("titulo"));
+                p.setDirector(rs.getString("director"));
+                p.setActores(rs.getString("actores"));
+                p.setOrigen(rs.getString("origen"));
+                p.setGenero(rs.getString("genero"));
+                p.setEstreno(rs.getDate("estreno"));
+                p.setEnCartelera(rs.getInt("en_cartelera") == 1);
+                peliculas.add(p);
+            }
+            return peliculas;
+        }
+    }
 }
