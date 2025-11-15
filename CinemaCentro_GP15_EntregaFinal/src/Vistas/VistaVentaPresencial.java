@@ -139,6 +139,10 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         cbFormatoIdioma = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setPreferredSize(new java.awt.Dimension(1000, 700));
 
         pnl_vta_presencial.setPreferredSize(new java.awt.Dimension(1000, 699));
@@ -152,7 +156,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         lblDNI.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDNI.setText("DNI:");
 
-        txtFieldDNI.setText("Nro. DNI");
         txtFieldDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFieldDNIActionPerformed(evt);

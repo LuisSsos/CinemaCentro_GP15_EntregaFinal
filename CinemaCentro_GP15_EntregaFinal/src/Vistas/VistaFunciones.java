@@ -66,7 +66,7 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
     private void inicializarCombos() {
         cb_idioma.removeAllItems();
         cb_idioma.addItem("Español");
-        cb_idioma.addItem("Inglés");
+        cb_idioma.addItem("Ingles");
         cb_idioma.setSelectedIndex(-1);
 
         cb_hora_inicio.removeAllItems();
@@ -269,7 +269,7 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
         dc_fecha_inicio.setDate(convertirADate(ini.toLocalDate().atStartOfDay()));
         cb_hora_inicio.setSelectedItem(ini.toLocalTime().withSecond(0).withNano(0).toString());
 
-        cb_idioma.setSelectedItem(f.isSubtitulada() ? "Inglés" : "Español");
+        cb_idioma.setSelectedItem(f.isSubtitulada() ? "Ingles" : "Español");
 
         LocalDateTime fin = convertirALocalDateTime(f.getHorafin());
         txt_fecha_fin.setText(fin.toLocalDate().toString());
@@ -611,12 +611,12 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
             LocalDateTime ini = getInicioDesdeUI();
             LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
             if (funcionDao.existeSolapado(f.getNrosala(), ini, fin)) {
-                msg("Ya existe una función en ese horario para la sala seleccionada");
+                msg("Ya existe una funcion en ese horario para la sala seleccionada");
                 return;
             }
 
             funcionDao.crear(f);
-            msg("Función guardada");
+            msg("Funcion guardada");
             cargarTablaSegunFiltro();
             limpiarFormulario();
         } catch (Exception e) {
@@ -626,7 +626,7 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
     private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
         if (seleccionadaOriginal == null) {
-            msg("Seleccione una función para actualizar");
+            msg("Seleccione una funcion para actualizar");
             return;
         }
         if (!validarFormulario()) {
@@ -640,12 +640,12 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
             LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
 
             if (funcionDao.existeSolapado(f.getNrosala(), ini, fin)) {
-                msg("Ya existe una función en ese horario para la sala seleccionada");
+                msg("Ya existe una funcion en ese horario para la sala seleccionada");
                 return;
             }
 
             funcionDao.actualizar(f);
-            msg("Función actualizada");
+            msg("Funcion actualizada");
             cargarTablaSegunFiltro();
             limpiarFormulario();
         } catch (Exception e) {
@@ -655,12 +655,12 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         if (seleccionadaOriginal == null) {
-            msg("Seleccione una función para eliminar");
+            msg("Seleccione una funcion para eliminar");
             return;
         }
 
         int op = JOptionPane.showConfirmDialog(this,
-                "Eliminar definitivamente la función seleccionada?",
+                "Eliminar definitivamente la funcion seleccionada?",
                 "Confirmar", JOptionPane.YES_NO_OPTION);
         if (op != JOptionPane.YES_OPTION) {
             return;
@@ -668,7 +668,7 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
         try {
             funcionDao.eliminar(seleccionadaOriginal.getIdfuncion());
-            msg("Función eliminada");
+            msg("Funcion eliminada");
             cargarTablaSegunFiltro();
             limpiarFormulario();
         } catch (Exception e) {
