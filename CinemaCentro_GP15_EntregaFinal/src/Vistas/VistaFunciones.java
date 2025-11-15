@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -53,6 +54,19 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
      */
     public VistaFunciones() {
         initComponents();
+        
+        Calendar calMin = Calendar.getInstance();
+        calMin.setTime(new Date());
+        calMin.add(Calendar.DAY_OF_MONTH, 1);
+        Date fechaMin = calMin.getTime();
+        
+        Calendar calMax = Calendar.getInstance();
+        calMax.setTime(new Date());
+        calMax.add(Calendar.DAY_OF_MONTH, 14);
+        Date fechaMax = calMax.getTime();
+        
+        dc_fecha_inicio.setMinSelectableDate(fechaMin);
+        dc_fecha_inicio.setMaxSelectableDate(fechaMax);
         
         modelo = (DefaultTableModel) tb_tabla.getModel();
         tb_tabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

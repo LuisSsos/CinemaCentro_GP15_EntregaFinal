@@ -447,7 +447,7 @@ public class VistaSalas extends javax.swing.JInternalFrame {
             cargarTablaBD();
             limpiarFormulario();
         } catch (Exception e) {
-            error(e);
+            JOptionPane.showMessageDialog(this, "No se puede eliminar esta sala por que existen funciones asociadas");
             System.out.println("ERROR: " + e);
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
