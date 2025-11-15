@@ -207,7 +207,7 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("ID TICKET");
 
-        jLabel3.setText("DNI Del Comprador");
+        jLabel3.setText("DNI CLIENTE");
 
         jLabel6.setText("FECHA COMPRA");
 

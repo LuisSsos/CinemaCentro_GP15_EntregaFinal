@@ -197,7 +197,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="DNI Del Comprador"/>
+        <Property name="text" type="java.lang.String" value="DNI CLIENTE"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
