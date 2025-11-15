@@ -1,4 +1,3 @@
-
 package Vistas;
 
 import Modelo.Asiento;
@@ -832,8 +831,31 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarCompradorActionPerformed
 
     private void btnAgregarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCompradorActionPerformed
+
         if (compradorActual != null) {
             JOptionPane.showMessageDialog(this, "El cliente ya existe en la base de datos");
+            return;
+        }
+
+        String dniTexto = txtDNI.getText().trim();
+        if (dniTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI");
+            txtDNI.requestFocus();
+            return;
+        }
+
+        if (dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 dígitos");
+            txtDNI.requestFocus();
+            return;
+        }
+
+        Integer dni = null;
+        try {
+            dni = Integer.parseInt(dniTexto);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
+            txtDNI.requestFocus();
             return;
         }
 
@@ -865,7 +887,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         }
 
         try {
-            Integer dni = Integer.parseInt(txtDNI.getText().trim());
             Comprador nuevo = new Comprador();
             nuevo.setDni(dni);
             nuevo.setNombre(nombre);
@@ -878,13 +899,14 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             txtNombreComprador.setEnabled(false);
             jDateComprador.setEnabled(false);
             btnAgregarComprador.setEnabled(false);
-
             compradorActual = nuevo;
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
             e.printStackTrace();
         }
+
+
     }//GEN-LAST:event_btnAgregarCompradorActionPerformed
 
 
