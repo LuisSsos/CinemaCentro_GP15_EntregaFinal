@@ -1,20 +1,358 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package Vistas;
 
+import Modelo.Funcion;
+import Modelo.Pelicula;
+import Modelo.Sala;
+import Persistencia.FuncionData;
+import Persistencia.PeliculaData;
+import Persistencia.SalaData;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
- *
- * @author Lucas
+ * @author Grupo 15
+ *  Luis Ezequiel Sosa
+ *  Lucas Saidman
+ *  Luca Rodrigaño
+ *  Ignacio Rodriguez
  */
+
 public class VistaFunciones extends javax.swing.JInternalFrame {
+    
+    private final FuncionData funcionDao = new FuncionData();
+    private final PeliculaData peliculaDao = new PeliculaData();
+    private final SalaData salaDao = new SalaData();
+
+    private DefaultTableModel modelo;
+
+    private final List<Pelicula> listaPeliculas = new ArrayList<>();
+    private final List<Sala> listaSalas = new ArrayList<>();
+    private final List<Funcion> listaFuncionesTabla = new ArrayList<>();
+    private Funcion seleccionadaOriginal = null;
+
+    private static final LocalTime[] HORAS_FIJAS = {
+        LocalTime.of(16, 0),
+        LocalTime.of(19, 0),
+        LocalTime.of(22, 0)
+    };
 
     /**
      * Creates new form VistaFunciones
      */
     public VistaFunciones() {
         initComponents();
+        
+        modelo = (DefaultTableModel) tb_tabla.getModel();
+        tb_tabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        inicializarCombos();
+        cargarPeliculasFiltro();
+        cargarSalas();
+        cargarTablaSegunFiltro();
+
+        escucharCambios();
+        reglasHabilitacion();
+    }
+    
+    private void inicializarCombos() {
+        cb_idioma.removeAllItems();
+        cb_idioma.addItem("Español");
+        cb_idioma.addItem("Inglés");
+        cb_idioma.setSelectedIndex(-1);
+
+        cb_hora_inicio.removeAllItems();
+        for (LocalTime h : HORAS_FIJAS) {
+            cb_hora_inicio.addItem(h.toString());
+        }
+        cb_hora_inicio.setSelectedIndex(-1);
+    }
+
+    private void escucharCambios() {
+        cb_pelicula.addItemListener(e -> {
+            cargarTablaSegunFiltro();
+            limpiarFormulario();
+            tb_tabla.clearSelection();
+            seleccionadaOriginal = null;
+            reglasHabilitacion();
+        });
+
+        dc_fecha_inicio.getDateEditor().addPropertyChangeListener(evt -> {
+            if ("date".equals(evt.getPropertyName())) {
+                actualizarFin();
+                reglasHabilitacion();
+            }
+        });
+
+        cb_hora_inicio.addItemListener(e -> {
+            actualizarFin();
+            reglasHabilitacion();
+        });
+
+        cb_sala.addItemListener(e -> reglasHabilitacion());
+        cb_idioma.addItemListener(e -> reglasHabilitacion());
+
+        tb_tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override public void mouseClicked(java.awt.event.MouseEvent e) {
+                tablaClick();
+            }
+        });
+    }
+
+    private void reglasHabilitacion() {
+        boolean haySeleccion = tb_tabla.getSelectedRow() >= 0 && seleccionadaOriginal != null;
+
+        boolean peliculaElegida = cb_pelicula.getSelectedIndex() > 0;
+        boolean salaElegida = cb_sala.getSelectedIndex() >= 0;
+        boolean fechaElegida = dc_fecha_inicio.getDate() != null;
+        boolean horaElegida = cb_hora_inicio.getSelectedIndex() >= 0;
+        boolean idiomaElegido = cb_idioma.getSelectedIndex() >= 0;
+
+        btn_nuevo.setEnabled(true);
+        boolean datosCompletos = peliculaElegida && salaElegida && fechaElegida && horaElegida && idiomaElegido;
+        btn_guardar.setEnabled(datosCompletos && !haySeleccion);
+        btn_actualizar.setEnabled(datosCompletos && haySeleccion);
+        btn_eliminar.setEnabled(haySeleccion);
+    }
+
+    private void cargarPeliculasFiltro() {
+        listaPeliculas.clear();
+        try {
+            listaPeliculas.addAll(peliculaDao.listarTodas());
+        } catch (SQLException e) {
+            error(e);
+        }
+
+        cb_pelicula.removeAllItems();
+        cb_pelicula.addItem("Todas");
+        for (Pelicula p : listaPeliculas) {
+            cb_pelicula.addItem(p.getTitulo());
+        }
+        cb_pelicula.setSelectedIndex(0);
+    }
+
+    private void cargarSalas() {
+        listaSalas.clear();
+        try {
+            listaSalas.addAll(salaDao.listarTodas());
+        } catch (SQLException e) {
+            error(e);
+        }
+
+        cb_sala.removeAllItems();
+        for (Sala s : listaSalas) {
+            cb_sala.addItem(String.valueOf(s.getNroSala()));
+        }
+        cb_sala.setSelectedIndex(-1);
+    }
+
+    private void cargarTablaSegunFiltro() {
+        limpiarTabla();
+        listaFuncionesTabla.clear();
+
+        try {
+            String sel = (String) cb_pelicula.getSelectedItem();
+            if (sel == null || "Todas".equals(sel)) {
+                for (Pelicula p : listaPeliculas) {
+                    List<Funcion> fs = funcionDao.listarPorPelicula(p.getIdPelicula());
+                    agregarFuncionesATabla(fs, p.getTitulo());
+                }
+            } else {
+                Pelicula peli = buscarPeliculaPorTitulo(sel);
+                if (peli != null) {
+                    List<Funcion> fs = funcionDao.listarPorPelicula(peli.getIdPelicula());
+                    agregarFuncionesATabla(fs, peli.getTitulo());
+                }
+            }
+        } catch (SQLException e) {
+            error(e);
+        }
+    }
+
+    private void agregarFuncionesATabla(List<Funcion> funciones, String tituloPelicula) {
+        for (Funcion f : funciones) {
+            listaFuncionesTabla.add(f);
+
+            LocalDateTime ini = convertirALocalDateTime(f.getHorainicio());
+            LocalDateTime fin = convertirALocalDateTime(f.getHorafin());
+
+            modelo.addRow(new Object[]{
+                tituloPelicula,
+                f.getNrosala(),
+                ini.toString().replace('T', ' '),
+                fin.toString().replace('T', ' ')
+            });
+        }
+    }
+
+    private void limpiarTabla() {
+        modelo.setRowCount(0);
+    }
+
+    private void limpiarFormulario() {
+        cb_sala.setSelectedIndex(-1);
+        dc_fecha_inicio.setDate(null);
+        cb_hora_inicio.setSelectedIndex(-1);
+        cb_idioma.setSelectedIndex(-1);
+        txt_fecha_fin.setText("");
+        txt_hora_fin.setText("");
+        seleccionadaOriginal = null;
+        reglasHabilitacion();
+    }
+
+    private Pelicula buscarPeliculaPorTitulo(String titulo) {
+        for (Pelicula p : listaPeliculas) {
+            if (p.getTitulo().equals(titulo)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    private LocalDateTime getInicioDesdeUI() {
+        Date fecha = dc_fecha_inicio.getDate();
+        Object horaSel = cb_hora_inicio.getSelectedItem();
+
+        if (fecha == null || horaSel == null) {
+            return null;
+        }
+
+        LocalDate ld = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalTime lt = LocalTime.parse(horaSel.toString());
+        return LocalDateTime.of(ld, lt);
+    }
+
+    private LocalDateTime convertirALocalDateTime(Date d) {
+        return d.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    private Date convertirADate(LocalDateTime ldt) {
+        return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    private void actualizarFin() {
+        LocalDateTime ini = getInicioDesdeUI();
+        if (ini == null) {
+            txt_fecha_fin.setText("");
+            txt_hora_fin.setText("");
+            return;
+        }
+
+        LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
+        txt_fecha_fin.setText(fin.toLocalDate().toString());
+        txt_hora_fin.setText(fin.toLocalTime().withSecond(0).withNano(0).toString());
+    }
+
+    private void setFormulario(Funcion f) {
+        Pelicula p = null;
+        for (Pelicula x : listaPeliculas) {
+            if (x.getIdPelicula() == f.getIdpelicula()) {
+                p = x;
+                break;
+            }
+        }
+        if (p != null) {
+            cb_pelicula.setSelectedItem(p.getTitulo());
+        }
+
+        cb_sala.setSelectedItem(String.valueOf(f.getNrosala()));
+
+        LocalDateTime ini = convertirALocalDateTime(f.getHorainicio());
+        dc_fecha_inicio.setDate(convertirADate(ini.toLocalDate().atStartOfDay()));
+        cb_hora_inicio.setSelectedItem(ini.toLocalTime().withSecond(0).withNano(0).toString());
+
+        cb_idioma.setSelectedItem(f.isSubtitulada() ? "Inglés" : "Español");
+
+        LocalDateTime fin = convertirALocalDateTime(f.getHorafin());
+        txt_fecha_fin.setText(fin.toLocalDate().toString());
+        txt_hora_fin.setText(fin.toLocalTime().withSecond(0).withNano(0).toString());
+    }
+
+    private Funcion armarFuncionDesdeFormulario() {
+        Funcion f = new Funcion();
+
+        String tituloPeli = (String) cb_pelicula.getSelectedItem();
+        Pelicula peli = buscarPeliculaPorTitulo(tituloPeli);
+        int nroSala = Integer.parseInt(cb_sala.getSelectedItem().toString());
+        String idioma = cb_idioma.getSelectedItem().toString();
+
+        boolean subtitulada = idioma.equalsIgnoreCase("Ingles");
+
+        LocalDateTime ini = getInicioDesdeUI();
+        LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
+
+        f.setIdpelicula(peli.getIdPelicula());
+        f.setNrosala(nroSala);
+        f.setIdioma(idioma);
+        f.setEs3d(false);
+        f.setSubtitulada(subtitulada);
+        f.setHorainicio(convertirADate(ini));
+        f.setHorafin(convertirADate(fin));
+        f.setLugaresdisponibles(0);
+        f.setPreciotipo(java.math.BigDecimal.valueOf(0));
+
+        if (seleccionadaOriginal != null) {
+            f.setIdfuncion(seleccionadaOriginal.getIdfuncion());
+        }
+
+        return f;
+    }
+
+    private boolean validarFormulario() {
+        if (cb_pelicula.getSelectedIndex() <= 0) {
+            msg("Seleccione una pelicula");
+            cb_pelicula.requestFocus();
+            return false;
+        }
+        if (cb_sala.getSelectedIndex() < 0) {
+            msg("Seleccione una sala");
+            cb_sala.requestFocus();
+            return false;
+        }
+        if (dc_fecha_inicio.getDate() == null) {
+            msg("Seleccione una fecha de inicio");
+            dc_fecha_inicio.requestFocus();
+            return false;
+        }
+        if (cb_hora_inicio.getSelectedIndex() < 0) {
+            msg("Seleccione una hora de inicio");
+            cb_hora_inicio.requestFocus();
+            return false;
+        }
+        if (cb_idioma.getSelectedIndex() < 0) {
+            msg("Seleccione un idioma");
+            cb_idioma.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private void tablaClick() {
+        int fila = tb_tabla.getSelectedRow();
+        if (fila < 0 || fila >= listaFuncionesTabla.size()) {
+            return;
+        }
+
+        seleccionadaOriginal = listaFuncionesTabla.get(fila);
+        setFormulario(seleccionadaOriginal);
+        reglasHabilitacion();
+    }
+
+    private void msg(String s) {
+        JOptionPane.showMessageDialog(this, s);
+    }
+
+    private void error(Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -255,19 +593,87 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
-        // TODO add your handling code here:
+        limpiarFormulario();
+        tb_tabla.clearSelection();
+        seleccionadaOriginal = null;
+        reglasHabilitacion();
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
-        // TODO add your handling code here:
+        if (!validarFormulario()) {
+            return;
+        }
+
+        try {
+            Funcion f = armarFuncionDesdeFormulario();
+
+            // chequeo solapamiento
+            LocalDateTime ini = getInicioDesdeUI();
+            LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
+            if (funcionDao.existeSolapado(f.getNrosala(), ini, fin)) {
+                msg("Ya existe una función en ese horario para la sala seleccionada");
+                return;
+            }
+
+            funcionDao.crear(f);
+            msg("Función guardada");
+            cargarTablaSegunFiltro();
+            limpiarFormulario();
+        } catch (Exception e) {
+            error(e);
+        }
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
-        // TODO add your handling code here:
+        if (seleccionadaOriginal == null) {
+            msg("Seleccione una función para actualizar");
+            return;
+        }
+        if (!validarFormulario()) {
+            return;
+        }
+
+        try {
+            Funcion f = armarFuncionDesdeFormulario();
+
+            LocalDateTime ini = getInicioDesdeUI();
+            LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
+
+            if (funcionDao.existeSolapado(f.getNrosala(), ini, fin)) {
+                msg("Ya existe una función en ese horario para la sala seleccionada");
+                return;
+            }
+
+            funcionDao.actualizar(f);
+            msg("Función actualizada");
+            cargarTablaSegunFiltro();
+            limpiarFormulario();
+        } catch (Exception e) {
+            error(e);
+        }
     }//GEN-LAST:event_btn_actualizarActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        // TODO add your handling code here:
+        if (seleccionadaOriginal == null) {
+            msg("Seleccione una función para eliminar");
+            return;
+        }
+
+        int op = JOptionPane.showConfirmDialog(this,
+                "Eliminar definitivamente la función seleccionada?",
+                "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (op != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            funcionDao.eliminar(seleccionadaOriginal.getIdfuncion());
+            msg("Función eliminada");
+            cargarTablaSegunFiltro();
+            limpiarFormulario();
+        } catch (Exception e) {
+            error(e);
+        }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
 
