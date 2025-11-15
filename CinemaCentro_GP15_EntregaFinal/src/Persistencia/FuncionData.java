@@ -29,7 +29,7 @@ public class FuncionData {
     }
 
     public int crear(Funcion f) throws SQLException {
-        String sql = "INSERT INTO funcion(id_pelicula, nro_sala, idioma, es_3d, subtitulada,hora_inicio, hora_fin, lugares_disponibles, precio_tipo) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO funcion(id_pelicula, nro_sala, idioma, es_3d, subtitulada, hora_inicio, hora_fin, lugares_disponibles, precio_tipo) VALUES(?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, f.getIdpelicula());
             ps.setInt(2, f.getNrosala());
@@ -128,7 +128,7 @@ public class FuncionData {
     }
 
     public void generarAsientos(int idFuncion, List<String> filas, int porFila) throws SQLException {
-        String sql = "INSERT INTO asiento(id_funcion, fila, numero, estado) VALUES(?,?,?,'LIBRE')";
+        String sql = "INSERT INTO asiento(id_funcion, fila, numero, estado) VALUES(?,?,?,1)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             for (String f : filas) {
                 for (int n = 1; n <= porFila; n++) {

@@ -28,6 +28,9 @@ public class VistaSalas extends javax.swing.JInternalFrame {
     public VistaSalas() {
         initComponents();
         
+        txt_capacidad.setText("30");
+        txt_capacidad.setEditable(false);
+        
         modelo = (DefaultTableModel) tb_tabla.getModel();
         tb_tabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -174,7 +177,6 @@ public class VistaSalas extends javax.swing.JInternalFrame {
 
     private void limpiarFormulario() {
         txt_numero_sala.setText("");
-        txt_capacidad.setText("");
         cb_tipo_sala.setSelectedIndex(0);
         cb_estado.setSelectedIndex(0);
         tb_tabla.clearSelection();
@@ -326,7 +328,8 @@ public class VistaSalas extends javax.swing.JInternalFrame {
 
         lb_estado.setText("Estado:");
 
-        cb_estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txt_capacidad.setEditable(false);
+        txt_capacidad.setText("30");
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-magnifying-glass-tilted-right-48.png"))); // NOI18N
         btn_buscar.addActionListener(new java.awt.event.ActionListener() {

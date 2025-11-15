@@ -44,6 +44,9 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
         LocalTime.of(19, 0),
         LocalTime.of(22, 0)
     };
+    
+    private static final java.math.BigDecimal PRECIO_2D = new java.math.BigDecimal("6000.00");
+    private static final java.math.BigDecimal PRECIO_3D = new java.math.BigDecimal("9000.00");
 
     /**
      * Creates new form VistaFunciones
@@ -229,6 +232,19 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
         LocalTime lt = LocalTime.parse(horaSel.toString());
         return LocalDateTime.of(ld, lt);
     }
+    
+    private Sala getSalaSeleccionada() {
+        int idx = cb_sala.getSelectedIndex();
+        if (idx < 0 || idx >= listaSalas.size()) {
+            return null;
+        }
+        return listaSalas.get(idx);
+    }
+    
+    private boolean esSala3DSeleccionada() {
+        Sala s = getSalaSeleccionada();
+        return s != null && s.isApta3D();
+    }
 
     private LocalDateTime convertirALocalDateTime(Date d) {
         return d.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
@@ -281,23 +297,40 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
         String tituloPeli = (String) cb_pelicula.getSelectedItem();
         Pelicula peli = buscarPeliculaPorTitulo(tituloPeli);
-        int nroSala = Integer.parseInt(cb_sala.getSelectedItem().toString());
+        if (peli == null) {
+            msg("No se pudo encontrar la película seleccionada");
+            return null;
+        }
+        
+        Sala sala = getSalaSeleccionada();
+        if (sala == null) {
+            msg("Seleccione una sala");
+            return null;
+        }
+        
+        
         String idioma = cb_idioma.getSelectedItem().toString();
-
         boolean subtitulada = idioma.equalsIgnoreCase("Ingles");
 
         LocalDateTime ini = getInicioDesdeUI();
+        if (ini == null) {
+            msg("Fecha u hora de inicio inválidas");
+            return null;
+        }
         LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
+        
+        boolean es3D = esSala3DSeleccionada();
+        java.math.BigDecimal precio = es3D ? PRECIO_3D : PRECIO_2D;
 
         f.setIdpelicula(peli.getIdPelicula());
-        f.setNrosala(nroSala);
+        f.setNrosala(sala.getNroSala());
         f.setIdioma(idioma);
-        f.setEs3d(false);
+        f.setEs3d(sala.isApta3D());
         f.setSubtitulada(subtitulada);
         f.setHorainicio(convertirADate(ini));
         f.setHorafin(convertirADate(fin));
-        f.setLugaresdisponibles(0);
-        f.setPreciotipo(java.math.BigDecimal.valueOf(0));
+        f.setLugaresdisponibles(sala.getCapacidad());
+        f.setPreciotipo(precio);
 
         if (seleccionadaOriginal != null) {
             f.setIdfuncion(seleccionadaOriginal.getIdfuncion());
@@ -606,8 +639,11 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
         try {
             Funcion f = armarFuncionDesdeFormulario();
-
-            // chequeo solapamiento
+            
+            if (f == null) {
+                return;
+            }
+            
             LocalDateTime ini = getInicioDesdeUI();
             LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
             if (funcionDao.existeSolapado(f.getNrosala(), ini, fin)) {
@@ -615,7 +651,14 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
                 return;
             }
 
-            funcionDao.crear(f);
+            int idGenerado = funcionDao.crear(f);
+            f.setIdfuncion(idGenerado);
+
+            java.util.List<String> filas = java.util.Arrays.asList("A","B","C","D","E");
+            int porFila = 6;
+
+            funcionDao.generarAsientos(idGenerado, filas, porFila);
+        
             msg("Funcion guardada");
             cargarTablaSegunFiltro();
             limpiarFormulario();
@@ -635,6 +678,10 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
         try {
             Funcion f = armarFuncionDesdeFormulario();
+            
+            if(f == null) {
+                return;
+            }
 
             LocalDateTime ini = getInicioDesdeUI();
             LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
