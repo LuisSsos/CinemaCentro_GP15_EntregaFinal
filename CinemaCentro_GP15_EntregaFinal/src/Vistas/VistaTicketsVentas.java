@@ -47,6 +47,7 @@ public class VistaTicketsVentas extends javax.swing.JInternalFrame {
                 }
             }
         });
+        actualizarTabla();
     }
 
     private void habilitarModoConsulta() {

@@ -18,19 +18,20 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
 
-
 /**
  *
  * @author Usuario
  */
 public class VistaPelicula extends javax.swing.JInternalFrame {
+
     private PeliculaData peliculaData;
+
     /**
      * Creates new form VistaPelicula
      */
     public VistaPelicula() {
         initComponents();
-        
+
         fechaSeleccionada.setMinSelectableDate(new java.util.GregorianCalendar(2000, Calendar.JANUARY, 1).getTime());
         fechaSeleccionada.setMaxSelectableDate(new java.util.Date());
 
@@ -53,6 +54,8 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Control de Películas");
+        
+        actualizarTabla();
     }
 
     /**
@@ -339,7 +342,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
 
         peliculaData.guardarPelicula(p);
         JOptionPane.showMessageDialog(this, "Pelicula Agregada Correctamente");
-
+        actualizarTabla();
     }//GEN-LAST:event_bttAggActionPerformed
 
     private void configurarTabla() {
@@ -461,19 +464,15 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
 
         peliculaData.actualizarPelicula(p);
         JOptionPane.showMessageDialog(this, "Película Actualizada Correctamente");
+        actualizarTabla();
     }//GEN-LAST:event_bttUpdateActionPerformed
 
-    private void bttListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttListarActionPerformed
+    private void actualizarTabla() {
         try {
             javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jtPeliculas.getModel();
-            modelo.setRowCount(0);
+            modelo.setRowCount(0); 
 
             List<Pelicula> peliculas = peliculaData.listarPeliculas();
-
-            if (peliculas.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No hay películas registradas");
-                return;
-            }
 
             for (Pelicula p : peliculas) {
                 Object[] fila = {
@@ -489,12 +488,16 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
                 modelo.addRow(fila);
             }
 
-            JOptionPane.showMessageDialog(this, "Se listaron " + peliculas.size() + " películas");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al listar: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al refrescar la tabla: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void bttListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttListarActionPerformed
+        actualizarTabla();
+        JOptionPane.showMessageDialog(this, "Lista de películas actualizada");
     }//GEN-LAST:event_bttListarActionPerformed
 
     private void bttDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttDeleteActionPerformed
@@ -516,7 +519,9 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         if (confirmar == JOptionPane.YES_OPTION) {
             peliculaData.eliminarPelicula(id);
             JOptionPane.showMessageDialog(this, "Película Eliminada Correctamente");
+            actualizarTabla();
         }
+        
     }//GEN-LAST:event_bttDeleteActionPerformed
 
 
