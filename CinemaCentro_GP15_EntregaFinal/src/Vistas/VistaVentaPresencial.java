@@ -16,7 +16,6 @@ import Persistencia.PeliculaData;
 import Persistencia.SalaData;
 import Persistencia.TicketCompraData;
 
-        
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -43,6 +42,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         btnAgregarComprador.setEnabled(false);
 
     }
+
     //Cliente
     private Integer parseEntero(String s) {
         try {
@@ -63,35 +63,34 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         }
         return true;
     }
-    
+
     //Peliculas
     private void cargarPeliculas() {
-    try {
-        listaPeliculas = peliculaDao.listarPeliculas();
-        cbPeliculas.removeAllItems();
+        try {
+            listaPeliculas = peliculaDao.listarPeliculas();
+            cbPeliculas.removeAllItems();
 
-        boolean hayPeliculas = false;
-        for (Pelicula p : listaPeliculas) {
-            if (p.isEnCartelera()) {
-                cbPeliculas.addItem(p.getTitulo());
-                hayPeliculas = true;
+            boolean hayPeliculas = false;
+            for (Pelicula p : listaPeliculas) {
+                if (p.isEnCartelera()) {
+                    cbPeliculas.addItem(p.getTitulo());
+                    hayPeliculas = true;
+                }
             }
-        }
 
-        if (!hayPeliculas) {
-            cbPeliculas.addItem("No hay peliculas en cartelera");
-            cbPeliculas.setEnabled(false);
-        } else {
-            cbPeliculas.setEnabled(true);
-        }
+            if (!hayPeliculas) {
+                cbPeliculas.addItem("No hay peliculas en cartelera");
+                cbPeliculas.setEnabled(false);
+            } else {
+                cbPeliculas.setEnabled(true);
+            }
 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-            "Error al cargar las peliculas: " + e.getMessage(),
-            "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar las peliculas: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-}
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -328,8 +327,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                             .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                                 .addComponent(lblDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(51, 51, 51)
-                                .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
+                                .addComponent(txtFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
                                 .addComponent(btnBuscarComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
                                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,8 +337,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                                 .addGap(1, 1, 1)
                                 .addGroup(pnl_vta_presencialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
-                                        .addComponent(jDateComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addComponent(jDateComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40)
                                         .addComponent(btnAgregarComprador))
                                     .addComponent(txtNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(pnl_vta_presencialLayout.createSequentialGroup()
@@ -446,10 +445,24 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtFieldDNIActionPerformed
 
     private void btnBuscarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCompradorActionPerformed
+        String dniTexto = txtFieldDNI.getText().trim();
+        if (dniTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI");
+            txtFieldDNI.requestFocus();
+            return;
+        }
 
-        Integer dni = parseEntero(txtFieldDNI.getText());
-        if (dni == null) {
-            JOptionPane.showMessageDialog(this, "Ingrese un DNI de 8 digitos");
+        if (dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
+            txtFieldDNI.requestFocus();
+            return;
+        }
+
+        Integer dni = null;
+        try {
+            dni = Integer.parseInt(dniTexto);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
             txtFieldDNI.requestFocus();
             return;
         }
@@ -457,7 +470,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         try {
             Comprador c = compradorDao.buscarPorDni(dni);
             if (c == null) {
-                JOptionPane.showMessageDialog(this,"No existe un comprador con ese DNI.\nComplete los datos para registrarlo.");
+                JOptionPane.showMessageDialog(this,
+                        "No existe un cliente con ese DNI.\nComplete los datos para registrarlo.");
 
                 compradorActual = null;
                 txtNombreComprador.setText("");
@@ -488,34 +502,18 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+
     }//GEN-LAST:event_btnBuscarCompradorActionPerformed
 
     private void btnAgregarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCompradorActionPerformed
-        String dniTexto = txtFieldDNI.getText().trim();
-        if (dniTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese el DNI del Cliente");
-            txtFieldDNI.requestFocus();
-            return;
-        }
-
-        if (dniTexto.length() != 8) {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
-            txtFieldDNI.requestFocus();
-            return;
-        }
-
-        Integer dni = null;
-        try {
-            dni = Integer.parseInt(dniTexto);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
-            txtFieldDNI.requestFocus();
+        if (compradorActual != null) {
+            JOptionPane.showMessageDialog(this, "El cliente ya existe en la base de datos");
             return;
         }
 
         String nombre = txtNombreComprador.getText().trim();
         if (nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese el nombre del Cliente");
+            JOptionPane.showMessageDialog(this, "Ingrese el nombre y apellido del Cliente");
             txtNombreComprador.requestFocus();
             return;
         }
@@ -535,19 +533,13 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         }
 
         if (fechaNac.after(new java.util.Date())) {
-            JOptionPane.showMessageDialog(this, "La Fecha de nacimiento no puede ser mayor a la actual!");
+            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser mayor a la actual");
             jDateComprador.requestFocus();
             return;
         }
 
         try {
-
-            Comprador existente = compradorDao.buscarPorDni(dni);
-            if (existente != null) {
-                JOptionPane.showMessageDialog(this, "Ya existe un cliente con ese DNI");
-                return;
-            }
-
+            Integer dni = Integer.parseInt(txtFieldDNI.getText().trim());
             Comprador nuevo = new Comprador();
             nuevo.setDni(dni);
             nuevo.setNombre(nombre);
@@ -564,7 +556,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             compradorActual = nuevo;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar el Cliente: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
             e.printStackTrace();
         }
 

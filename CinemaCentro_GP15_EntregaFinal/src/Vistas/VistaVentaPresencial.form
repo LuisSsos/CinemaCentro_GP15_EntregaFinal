@@ -127,8 +127,8 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="lblDNI" min="-2" pref="80" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                  <Component id="txtFieldDNI" min="-2" pref="125" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="txtFieldDNI" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                                   <Component id="btnBuscarComprador" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -139,11 +139,11 @@
                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="jDateComprador" min="-2" pref="157" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jDateComprador" min="-2" pref="135" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                                           <Component id="btnAgregarComprador" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="txtNombreComprador" alignment="0" min="-2" pref="224" max="-2" attributes="0"/>
+                                      <Component id="txtNombreComprador" min="-2" pref="224" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
