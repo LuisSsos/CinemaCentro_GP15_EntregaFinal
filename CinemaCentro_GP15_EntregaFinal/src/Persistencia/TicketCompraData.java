@@ -96,6 +96,20 @@ public class TicketCompraData {
         }
     }
 
+    public List<TicketCompra> buscarPorComprador(int idComprador) throws SQLException {
+        List<TicketCompra> tickets = new ArrayList<>();
+        String sql = "SELECT * FROM ticket_compra WHERE id_comprador=? ORDER BY fecha_compra DESC";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idComprador);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    tickets.add(map(rs));
+                }
+            }
+        }
+        return tickets;
+    }
+
     public List<TicketCompra> listarPorFecha(java.time.LocalDate fecha) throws SQLException {
         String sql = "SELECT * FROM ticket_compra WHERE DATE(fecha_compra)=? ORDER BY id_ticket";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
