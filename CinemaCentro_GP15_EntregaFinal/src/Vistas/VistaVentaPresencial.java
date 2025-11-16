@@ -481,11 +481,17 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPrecio.setText("Precio Unitario:");
 
+        txtPrecioUnit.setEditable(false);
+
         lblCantidad.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCantidad.setText("Cantidad:");
 
+        txtCantidad.setEditable(false);
+
         lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTotal.setText("Total:");
+
+        txtTotal.setEditable(false);
 
         btnCompra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCompra.setText("Confirmar Compra");
@@ -1046,8 +1052,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                 asientoDao.ocuparSiLibre(a.getIdasiento());
             }
 
-            JOptionPane.showMessageDialog(this,
-                    "Compra registrada correctamente. Ticket Nº: " + idTicket + "\nTotal: $" + total);
+            JOptionPane.showMessageDialog(this,"Compra registrada correctamente. Ticket Nº: " + idTicket + "\nTotal: $" + total);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al confirmar la compra: " + e.getMessage());
@@ -1075,7 +1080,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             b.setSelected(false);
         }
         compradorActual = null;
-
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 

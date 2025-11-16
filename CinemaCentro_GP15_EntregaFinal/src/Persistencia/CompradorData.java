@@ -34,7 +34,7 @@ public class CompradorData {
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     int id = rs.getInt(1);
-                    c.setIdcomprador(id); // 🔹 Guardamos el ID generado en el objeto
+                    c.setIdcomprador(id);
                     return id;
                 }
             }
