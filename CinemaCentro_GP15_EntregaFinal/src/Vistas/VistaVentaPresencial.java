@@ -39,7 +39,6 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
 
     public VistaVentaPresencial() {
         initComponents();
-        initComponents();
         cargarPeliculas();
         cargarMetodosPago();
         txtNombreComprador.setEnabled(false);
