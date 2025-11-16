@@ -30,7 +30,7 @@ public class TicketCompraData {
             ps.setInt(1, t.getIdcomprador());
             ps.setTimestamp(2, new Timestamp(t.getFechacompra().getTime()));
             ps.setBigDecimal(3, t.getPreciounitario());
-            ps.setInt(4, t.getCantidad()); // <-- DEJÁ ESTO
+            ps.setInt(4, t.getCantidad());
             ps.setBigDecimal(5, t.getMontototal());
             ps.setString(6, t.getCanal());
             ps.setString(7, t.getMediopago());
@@ -43,22 +43,24 @@ public class TicketCompraData {
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al crear ticket: " + ex.getMessage());
+            ex.printStackTrace();
         }
         return -1;
     }
 
     public int actualizar(TicketCompra t) throws SQLException {
-        String sql = "UPDATE ticket_compra SET id_comprador=?, fecha_compra=?, precio_unitario=?, cantidad=?, monto_total=?, canal=?, medio_pago=? WHERE id_ticket=?";
+
+        String sql = "UPDATE ticket_compra SET id_comprador=?, fecha_compra=?, cantidad=?, monto_total=?, canal=?, medio_pago=? WHERE id_ticket=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, t.getIdcomprador());
             ps.setTimestamp(2, new Timestamp(t.getFechacompra().getTime()));
-            ps.setBigDecimal(3, t.getPreciounitario());
-            ps.setInt(4, t.getCantidad()); // <-- DEJÁ ESTO
-            ps.setBigDecimal(5, t.getMontototal());
-            ps.setString(6, t.getCanal());
-            ps.setString(7, t.getMediopago());
-            ps.setInt(8, t.getIdticket());
+            ps.setInt(3, t.getCantidad());
+            ps.setBigDecimal(4, t.getMontototal());
+            ps.setString(5, t.getCanal());
+            ps.setString(6, t.getMediopago());
+            ps.setInt(7, t.getIdticket());
             return ps.executeUpdate();
+
         }
     }
 
@@ -129,7 +131,6 @@ public class TicketCompraData {
         t.setIdticket(rs.getInt("id_ticket"));
         t.setIdcomprador(rs.getInt("id_comprador"));
         t.setFechacompra(rs.getTimestamp("fecha_compra"));
-        t.setPreciounitario(rs.getBigDecimal("precio_unitario"));
         t.setCantidad(rs.getInt("cantidad"));
         t.setMontototal(rs.getBigDecimal("monto_total"));
         t.setCanal(rs.getString("canal"));

@@ -6,13 +6,12 @@ import java.util.Date;
 /**
  * @author Grupo 15 Luis Ezequiel Sosa Lucas Saidman Luca Rodrigaño Ignacio
  * Rodriguez
-*
+ *
  */
 public class TicketCompra {
 
     private int id_ticket;
     private int id_comprador;
-    private int id_funcion;
     private Date fecha_compra;
     private java.math.BigDecimal precio_unitario;
     private java.math.BigDecimal monto_total;
@@ -100,7 +99,7 @@ public class TicketCompra {
 
     @Override
     public String toString() {
-        return "TicketCompra{" + "id_ticket=" + id_ticket + ", id_comprador=" + id_comprador + ", id_funcion=" + id_funcion + ", fecha_compra=" + fecha_compra + ", precio_unitario=" + precio_unitario + ", monto_total=" + monto_total + ", Canal=" + Canal + ", medio_pago=" + medio_pago + ", cantidad=" + cantidad + '}';
+        return "TicketCompra{" + "id_ticket=" + id_ticket + ", id_comprador=" + id_comprador + ", fecha_compra=" + fecha_compra + ", precio_unitario=" + precio_unitario + ", monto_total=" + monto_total + ", Canal=" + Canal + ", medio_pago=" + medio_pago + ", cantidad=" + cantidad + '}';
     }
 
 }

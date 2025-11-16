@@ -27,15 +27,35 @@ public class DetalleTicketData {
         }
     }
 
-    public void insertar(int idTicket, int idAsiento, BigDecimal precioUnitario) throws SQLException {
-        String sql = "INSERT INTO detalle_ticket (id_ticket, id_asiento, precio_unitario) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idTicket);
-            ps.setInt(2, idAsiento);
-            ps.setBigDecimal(3, precioUnitario);
-            ps.executeUpdate();
+public void insertar(int idTicket, int idAsiento) throws SQLException {
+    String sql = "INSERT INTO detalle_ticket (id_ticket, id_asiento) VALUES (?, ?)";
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idTicket);
+        ps.setInt(2, idAsiento);
+        ps.executeUpdate();
+    }
+}
+
+public List<Integer> obtenerAsientosOcupadosPorFuncion(int idFuncion) throws SQLException {
+    String sql = """
+        SELECT dt.id_asiento
+        FROM detalle_ticket dt
+        JOIN ticket_compra tc ON dt.id_ticket = tc.id_ticket
+        JOIN asiento a ON dt.id_asiento = a.id_asiento
+        WHERE a.id_funcion = ?
+    """;
+    List<Integer> asientosOcupados = new ArrayList<>();
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idFuncion);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                asientosOcupados.add(rs.getInt("id_asiento"));
+            }
         }
     }
+    return asientosOcupados;
+}
 
     public List<DetalleTicket> listarPorTicket(int idTicket) throws SQLException {
         String sql = "SELECT id_detalle, id_ticket, id_asiento FROM detalle_ticket WHERE id_ticket= ?";
