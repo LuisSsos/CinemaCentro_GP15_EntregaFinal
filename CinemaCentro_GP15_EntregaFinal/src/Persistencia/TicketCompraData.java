@@ -135,6 +135,7 @@ public class TicketCompraData {
         t.setMontototal(rs.getBigDecimal("monto_total"));
         t.setCanal(rs.getString("canal"));
         t.setMediopago(rs.getString("medio_pago"));
+        t.setPreciounitario(rs.getBigDecimal("precio_unitario"));
         return t;
     }
 }
