@@ -1053,6 +1053,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al confirmar la compra: " + e.getMessage());
             e.printStackTrace();
         }
+        cargarAsientosPorFuncion();
 
     }//GEN-LAST:event_btnCompraActionPerformed
 
