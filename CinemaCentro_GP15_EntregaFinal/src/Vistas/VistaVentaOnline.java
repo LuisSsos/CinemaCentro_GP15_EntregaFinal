@@ -1,3 +1,4 @@
+
 package Vistas;
 
 import Modelo.Asiento;
@@ -24,6 +25,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 
 public class VistaVentaOnline extends javax.swing.JInternalFrame {
 
@@ -291,10 +293,9 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                     boton.setEnabled(true);
                     boton.setBackground(java.awt.Color.GREEN);
 
-                    // 🔹 Cuando el usuario lo selecciona → cambia de color
                     boton.addItemListener(e -> {
                         if (boton.isSelected()) {
-                            boton.setBackground(new java.awt.Color(100, 149, 237)); // Azul acero
+                            boton.setBackground(new java.awt.Color(100, 149, 237));
                         } else {
                             boton.setBackground(java.awt.Color.GREEN);
                         }
@@ -319,7 +320,6 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
     //Pago
     private void cargarMetodosPago() {
         cbMedioPago.removeAllItems();
-        cbMedioPago.addItem("Efectivo");
         cbMedioPago.addItem("Tarjeta de Credito");
         cbMedioPago.addItem("Tarjeta de Debito");
         cbMedioPago.addItem("Mercado Pago");
@@ -416,9 +416,9 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         E5 = new javax.swing.JToggleButton();
         E6 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtMail = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -615,7 +615,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -625,7 +625,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(cbPeliculas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField2)
+                                        .addComponent(txtPassword)
                                         .addComponent(cbFechasDisponibles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(txtNombreComprador))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -806,17 +806,21 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                                     .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+<<<<<<< Updated upstream
                 .addGap(18, 18, 18)
+=======
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+>>>>>>> Stashed changes
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -839,9 +843,9 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                     .addComponent(cbFechasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbMedioPago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -858,76 +862,13 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                     .addComponent(btnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCompradorActionPerformed
-        String dniTexto = txtDNI.getText().trim();
-        if (dniTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese un DNI");
-            txtDNI.requestFocus();
-            return;
-        }
-
-        if (dniTexto.length() != 8) {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
-            txtDNI.requestFocus();
-            return;
-        }
-
-        Integer dni = null;
-        try {
-            dni = Integer.parseInt(dniTexto);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
-            txtDNI.requestFocus();
-            return;
-        }
-
-        try {
-            Comprador c = compradorDao.buscarPorDni(dni);
-            if (c == null) {
-                JOptionPane.showMessageDialog(this, "No existe un cliente con ese DNI.\nComplete los datos para registrarlo.");
-
-                compradorActual = null;
-                txtNombreComprador.setText("");
-                jDateComprador.setDate(null);
-
-                txtNombreComprador.setEnabled(true);
-                jDateComprador.setEnabled(true);
-                btnAgregarComprador.setEnabled(true);
-                return;
-            }
-
-            compradorActual = c;
-            txtNombreComprador.setText(c.getNombre());
-            if (c.getFecha_nac() != null) {
-                jDateComprador.setDate(c.getFecha_nac());
-            } else {
-                jDateComprador.setDate(null);
-            }
-
-            txtNombreComprador.setEnabled(false);
-            jDateComprador.setEnabled(false);
-            btnAgregarComprador.setEnabled(false);
-
-            JOptionPane.showMessageDialog(this, "Cliente encontrado: " + c.getNombre());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error al buscar Cliente: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnBuscarCompradorActionPerformed
-
-    private void btnAgregarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCompradorActionPerformed
-
-        if (compradorActual != null) {
-            JOptionPane.showMessageDialog(this, "El cliente ya existe en la base de datos");
-            return;
-        }
 
         String dniTexto = txtDNI.getText().trim();
         if (dniTexto.isEmpty()) {
@@ -942,7 +883,82 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             return;
         }
 
-        Integer dni = null;
+        int dni;
+        try {
+            dni = Integer.parseInt(dniTexto);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El DNI solo debe contener números");
+            txtDNI.requestFocus();
+            return;
+        }
+
+        try {
+            Comprador c = compradorDao.buscarPorDni(dni);
+            if (c == null) {
+                JOptionPane.showMessageDialog(this, "No existe un cliente con ese DNI.\nComplete sus datos para registrarse.");
+
+                compradorActual = null;
+
+                txtNombreComprador.setText("");
+                jDateComprador.setDate(null);
+                txtMail.setText("");
+                txtPassword.setText("");
+
+                txtNombreComprador.setEnabled(true);
+                jDateComprador.setEnabled(true);
+                txtMail.setEnabled(true);
+                txtPassword.setEnabled(true);
+                btnAgregarComprador.setEnabled(true);
+                return;
+            }
+
+            compradorActual = c;
+            txtNombreComprador.setText(c.getNombre());
+            jDateComprador.setDate(c.getFecha_nac());
+            txtMail.setText(c.getEmail() != null ? c.getEmail() : "");
+            txtPassword.setText(c.getContraseña() != null ? c.getContraseña() : "");
+
+            if (c.getEmail() == null || c.getEmail().trim().isEmpty()
+                    || c.getContraseña() == null || c.getContraseña().trim().isEmpty()) {
+
+                JOptionPane.showMessageDialog(this, "El cliente existe pero no tiene Email o Contraseña registrados.\n" + "Complete los datos y presione Guardar para actualizarlo.");
+
+                txtMail.setEnabled(true);
+                txtPassword.setEnabled(true);
+                btnAgregarComprador.setEnabled(true);
+            } else {
+                txtMail.setEnabled(false);
+                txtPassword.setEnabled(false);
+                btnAgregarComprador.setEnabled(false);
+            }
+
+            txtNombreComprador.setEnabled(false);
+            jDateComprador.setEnabled(false);
+
+            JOptionPane.showMessageDialog(this, "Cliente encontrado: " + c.getNombre());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al buscar Cliente: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnBuscarCompradorActionPerformed
+
+    private void btnAgregarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCompradorActionPerformed
+        if (compradorActual != null) {
+            JOptionPane.showMessageDialog(this, "El cliente ya existe");
+            return;
+        }
+
+        String dniTexto = txtDNI.getText().trim();
+        if (dniTexto.isEmpty() || dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI valido 8 dígitos");
+            txtDNI.requestFocus();
+            return;
+        }
+
+        int dni;
         try {
             dni = Integer.parseInt(dniTexto);
         } catch (NumberFormatException e) {
@@ -952,51 +968,70 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         }
 
         String nombre = txtNombreComprador.getText().trim();
-        if (nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese el nombre y apellido del Cliente");
-            txtNombreComprador.requestFocus();
+        String email = txtMail.getText().trim();
+        String contraseña = txtPassword.getText().trim();
+        java.util.Date fechaNac = jDateComprador.getDate();
+
+        if (nombre.isEmpty() || email.isEmpty() || contraseña.isEmpty() || fechaNac == null) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos requeridos");
             return;
         }
 
         if (!esSoloTexto(nombre)) {
             JOptionPane.showMessageDialog(this, "El nombre solo puede contener letras y espacios");
             txtNombreComprador.requestFocus();
-            txtNombreComprador.selectAll();
-            return;
-        }
-
-        java.util.Date fechaNac = jDateComprador.getDate();
-        if (fechaNac == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione la fecha de nacimiento");
-            jDateComprador.requestFocus();
             return;
         }
 
         if (fechaNac.after(new java.util.Date())) {
-            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser mayor a la actual");
-            jDateComprador.requestFocus();
+            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura");
             return;
         }
 
         try {
+            if (compradorActual != null) {
+                if (compradorActual.getEmail() == null || compradorActual.getEmail().trim().isEmpty()
+                        || compradorActual.getContraseña() == null || compradorActual.getContraseña().trim().isEmpty()) {
+
+                    compradorActual.setEmail(email);
+                    compradorActual.setContraseña(contraseña);
+                    compradorDao.actualizar(compradorActual);
+
+                    JOptionPane.showMessageDialog(this, "Datos del cliente actualizados correctamente.");
+
+                    txtMail.setEnabled(false);
+                    txtPassword.setEnabled(false);
+                    btnAgregarComprador.setEnabled(false);
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Datos del cliente completos.");
+                    return;
+                }
+            }
+
             Comprador nuevo = new Comprador();
             nuevo.setDni(dni);
             nuevo.setNombre(nombre);
             nuevo.setFecha_nac(fechaNac);
+            nuevo.setEmail(email);
+            nuevo.setContraseña(contraseña);
 
             compradorDao.crear(nuevo);
+            compradorActual = compradorDao.buscarPorDni(dni);
 
-            JOptionPane.showMessageDialog(this, "Cliente agregado correctamente");
+            JOptionPane.showMessageDialog(this, "Cliente registrado correctamente.");
 
             txtNombreComprador.setEnabled(false);
             jDateComprador.setEnabled(false);
+            txtMail.setEnabled(false);
+            txtPassword.setEnabled(false);
             btnAgregarComprador.setEnabled(false);
-            compradorActual = nuevo;
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar el cliente: " + e.getMessage());
             e.printStackTrace();
         }
+
     }//GEN-LAST:event_btnAgregarCompradorActionPerformed
 
     private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
@@ -1053,7 +1088,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             ticket.setPreciounitario(precioUnit);
             ticket.setCantidad(cantidad);
             ticket.setMontototal(total);
-            ticket.setCanal("Mostrador");
+            ticket.setCanal("Online");
             ticket.setMediopago(cbMedioPago.getSelectedItem().toString());
 
             int idTicket = ticketDao.crear(ticket);
@@ -1067,18 +1102,16 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                 asientoDao.ocuparSiLibre(a.getIdasiento());
             }
 
-            JOptionPane.showMessageDialog(this,
-                    "Compra registrada correctamente. Ticket Nº: " + idTicket + "\nTotal: $" + total);
+            JOptionPane.showMessageDialog(this, "Compra registrada correctamente. Recibira el boleto en su email: Ticket Nº: " + idTicket + "\nTotal: $" + total);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al confirmar la compra: " + e.getMessage());
             e.printStackTrace();
         }
-
+        cargarAsientosPorFuncion();
     }//GEN-LAST:event_btnCompraActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-
         txtDNI.setText("");
         txtNombreComprador.setText("");
         jDateComprador.setDate(null);
@@ -1090,12 +1123,13 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         cbFechasDisponibles.removeAllItems();
         cbHoras.removeAllItems();
         cbMedioPago.setSelectedIndex(0);
+        txtPassword.setText("");
+        txtMail.setText("");
         for (javax.swing.JToggleButton b : listaAsientos) {
             b.setEnabled(false);
             b.setSelected(false);
         }
         compradorActual = null;
-
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -1149,8 +1183,6 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblDNI;
     private javax.swing.JLabel lblFecha;
@@ -1169,7 +1201,9 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtDNI;
+    private javax.swing.JTextField txtMail;
     private javax.swing.JTextField txtNombreComprador;
+    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPrecioUnit;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
