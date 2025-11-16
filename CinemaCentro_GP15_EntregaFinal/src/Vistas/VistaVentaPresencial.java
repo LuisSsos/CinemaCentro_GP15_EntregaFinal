@@ -128,7 +128,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,"Error al cargar las peliculas: " + e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al cargar las peliculas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -277,7 +277,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                         "No hay asientos cargados para esta funcion: " + funcionSeleccionada.getIdfuncion());
                 return;
             }
-            
+
             List<Integer> ocupados = detalleDao.obtenerAsientosOcupadosPorFuncion(funcionSeleccionada.getIdfuncion());
 
             int limite = Math.min(listaAsientos.size(), asientos.size());
@@ -285,9 +285,22 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                 javax.swing.JToggleButton boton = listaAsientos.get(i);
                 Asiento asiento = asientos.get(i);
 
+                boton.setOpaque(true);
+                boton.setContentAreaFilled(true);
+
                 if (asiento.isEstado() && !ocupados.contains(asiento.getIdasiento())) {
                     boton.setEnabled(true);
                     boton.setBackground(java.awt.Color.GREEN);
+
+                    // 🔹 Cuando el usuario lo selecciona → cambia de color
+                    boton.addItemListener(e -> {
+                        if (boton.isSelected()) {
+                            boton.setBackground(new java.awt.Color(100, 149, 237)); // Azul acero
+                        } else {
+                            boton.setBackground(java.awt.Color.GREEN);
+                        }
+                    });
+
                 } else {
                     boton.setEnabled(false);
                     boton.setSelected(false);
@@ -485,9 +498,19 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar y Limpiar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         lblPantalla.setBackground(new java.awt.Color(0, 0, 255));
         lblPantalla.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1033,6 +1056,32 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_btnCompraActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+
+        txtDNI.setText("");
+        txtNombreComprador.setText("");
+        jDateComprador.setDate(null);
+        txtPrecioUnit.setText("");
+        txtCantidad.setText("");
+        txtTotal.setText("");
+        cbPeliculas.setSelectedIndex(0);
+        cbFormatoIdioma.removeAllItems();
+        cbFechasDisponibles.removeAllItems();
+        cbHoras.removeAllItems();
+        cbMedioPago.setSelectedIndex(0);
+        for (javax.swing.JToggleButton b : listaAsientos) {
+            b.setEnabled(false);
+            b.setSelected(false);
+        }
+        compradorActual = null;
+
+
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
