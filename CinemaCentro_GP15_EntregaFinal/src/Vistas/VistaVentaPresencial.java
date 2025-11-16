@@ -33,6 +33,9 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     private List<Pelicula> listaPeliculas = new ArrayList<>();
     private final FuncionData funcionDao = new FuncionData();
     private List<Funcion> listaFunciones = new ArrayList<>();
+    private final TicketCompraData ticketDao = new TicketCompraData();
+    private final DetalleTicketData detalleDao = new DetalleTicketData();
+    private final AsientoData asientoDao = new AsientoData();
 
     public VistaVentaPresencial() {
         initComponents();
@@ -77,8 +80,8 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
         listaAsientos.add(E6);
 
         for (javax.swing.JToggleButton b : listaAsientos) {
-    b.addActionListener(e -> actualizarCantidadYTotal());
-}
+            b.addActionListener(e -> actualizarCantidadYTotal());
+        }
 
     }
 
@@ -125,9 +128,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error al cargar las peliculas: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Error al cargar las peliculas: " + e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -236,10 +237,10 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     private final List<javax.swing.JToggleButton> listaAsientos = new ArrayList<>();
 
     private void cargarAsientosPorFuncion() {
-
         for (javax.swing.JToggleButton b : listaAsientos) {
             b.setEnabled(false);
             b.setSelected(false);
+            b.setBackground(null); // limpia color previo
         }
 
         String fechaSel = (String) cbFechasDisponibles.getSelectedItem();
@@ -270,35 +271,37 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                 return;
             }
 
-            AsientoData asientoDao = new AsientoData();
             List<Asiento> asientos = asientoDao.listarTodosPorFuncion(funcionSeleccionada.getIdfuncion());
-
             if (asientos == null || asientos.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                        "No hay asientos cargados para esta funcion" + funcionSeleccionada.getIdfuncion());
+                        "No hay asientos cargados para esta funcion: " + funcionSeleccionada.getIdfuncion());
                 return;
             }
+            
+            List<Integer> ocupados = detalleDao.obtenerAsientosOcupadosPorFuncion(funcionSeleccionada.getIdfuncion());
 
-            int limite = listaAsientos.size();
+            int limite = Math.min(listaAsientos.size(), asientos.size());
             for (int i = 0; i < limite; i++) {
                 javax.swing.JToggleButton boton = listaAsientos.get(i);
                 Asiento asiento = asientos.get(i);
 
-                if (asiento.isEstado()) {
+                if (asiento.isEstado() && !ocupados.contains(asiento.getIdasiento())) {
                     boton.setEnabled(true);
+                    boton.setBackground(java.awt.Color.GREEN);
                 } else {
                     boton.setEnabled(false);
+                    boton.setSelected(false);
+                    boton.setBackground(java.awt.Color.RED);
                 }
             }
 
-        txtPrecioUnit.setText(String.valueOf(funcionSeleccionada.getPreciotipo()));
-        actualizarCantidadYTotal();
+            txtPrecioUnit.setText(String.valueOf(funcionSeleccionada.getPreciotipo()));
+            actualizarCantidadYTotal();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar los asientos: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     //Pago
@@ -311,23 +314,24 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     }
 
     private void actualizarCantidadYTotal() {
-    int cantidad = 0;
-    for (javax.swing.JToggleButton b : listaAsientos) {
-        if (b.isSelected()) cantidad++;
+        int cantidad = 0;
+        for (javax.swing.JToggleButton b : listaAsientos) {
+            if (b.isSelected()) {
+                cantidad++;
+            }
+        }
+
+        txtCantidad.setText(String.valueOf(cantidad));
+
+        try {
+            double precio = Double.parseDouble(txtPrecioUnit.getText());
+            double total = cantidad * precio;
+            txtTotal.setText(String.format("%.2f", total));
+        } catch (NumberFormatException e) {
+            txtTotal.setText("");
+        }
     }
 
-    txtCantidad.setText(String.valueOf(cantidad));
-
-    try {
-        double precio = Double.parseDouble(txtPrecioUnit.getText());
-        double total = cantidad * precio;
-        txtTotal.setText(String.format("%.2f", total));
-    } catch (NumberFormatException e) {
-        txtTotal.setText("");
-    }
-}
-
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -473,6 +477,11 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
 
         btnCompra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCompra.setText("Confirmar Compra");
+        btnCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCompraActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar y Limpiar");
@@ -946,6 +955,84 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnAgregarCompradorActionPerformed
+
+    private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
+        try {
+            if (compradorActual == null) {
+                JOptionPane.showMessageDialog(this, "Debe buscar o registrar un cliente antes de confirmar la compra.");
+                return;
+            }
+
+            String fechaSel = (String) cbFechasDisponibles.getSelectedItem();
+            String horaSel = (String) cbHoras.getSelectedItem();
+            if (fechaSel == null || horaSel == null) {
+                JOptionPane.showMessageDialog(this, "Funcion Invalida.");
+                return;
+            }
+
+            Funcion funcionSeleccionada = null;
+            for (Funcion f : listaFunciones) {
+                java.time.LocalDateTime inicio = f.getHorainicio().toInstant()
+                        .atZone(java.time.ZoneId.systemDefault()).toLocalDateTime();
+                String fechaFuncion = inicio.toLocalDate().toString();
+                String horaFuncion = inicio.toLocalTime().withSecond(0).withNano(0).toString();
+                if (fechaFuncion.equals(fechaSel) && horaFuncion.equals(horaSel)) {
+                    funcionSeleccionada = f;
+                    break;
+                }
+            }
+
+            if (funcionSeleccionada == null) {
+                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada.");
+                return;
+            }
+
+            List<Asiento> asientosSeleccionados = new ArrayList<>();
+            List<Asiento> asientosFuncion = asientoDao.listarTodosPorFuncion(funcionSeleccionada.getIdfuncion());
+            for (int i = 0; i < listaAsientos.size(); i++) {
+                if (listaAsientos.get(i).isSelected()) {
+                    asientosSeleccionados.add(asientosFuncion.get(i));
+                }
+            }
+
+            if (asientosSeleccionados.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar al menos un asiento.");
+                return;
+            }
+
+            java.math.BigDecimal precioUnit = funcionSeleccionada.getPreciotipo();
+            int cantidad = asientosSeleccionados.size();
+            java.math.BigDecimal total = precioUnit.multiply(new java.math.BigDecimal(cantidad));
+
+            TicketCompra ticket = new TicketCompra();
+            ticket.setIdcomprador(compradorActual.getIdcomprador());
+            ticket.setFechacompra(new java.util.Date());
+            ticket.setPreciounitario(precioUnit);
+            ticket.setCantidad(cantidad);
+            ticket.setMontototal(total);
+            ticket.setCanal("Mostrador");
+            ticket.setMediopago(cbMedioPago.getSelectedItem().toString());
+
+            int idTicket = ticketDao.crear(ticket);
+            if (idTicket <= 0) {
+                JOptionPane.showMessageDialog(this, "No se pudo registrar el ticket.");
+                return;
+            }
+
+            for (Asiento a : asientosSeleccionados) {
+                detalleDao.insertar(idTicket, a.getIdasiento());
+                asientoDao.ocuparSiLibre(a.getIdasiento());
+            }
+
+            JOptionPane.showMessageDialog(this,
+                    "Compra registrada correctamente. Ticket Nº: " + idTicket + "\nTotal: $" + total);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al confirmar la compra: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_btnCompraActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
