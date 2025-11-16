@@ -28,10 +28,39 @@ public class CompradorData {
             ps.setString(4, c.getContraseña());
             ps.setString(5, c.getEmail());
             ps.executeUpdate();
-            try (ResultSet rs = ps.getGeneratedKeys()) { if (rs.next()) return rs.getInt(1); }
+        try (ResultSet rs = ps.getGeneratedKeys()) {
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                c.setIdcomprador(id); // 🔹 Guardamos el ID generado en el objeto
+                return id;
+            }
         }
         throw new SQLException("No se genero id_comprador");
     }
+    }
+    /*public int crear(Comprador c) {
+    String sql = "INSERT INTO comprador (dni, nombre, fecha_nac, contrasena, email) VALUES (?, ?, ?, ?, ?)";
+    try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        ps.setInt(1, c.getDni());
+        ps.setString(2, c.getNombre());
+        ps.setDate(3, new java.sql.Date(c.getFecha_nac().getTime()));
+        ps.setString(4, c.getContrasena());
+        ps.setString(5, c.getEmail());
+        ps.executeUpdate();
+
+        try (ResultSet rs = ps.getGeneratedKeys()) {
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                c.setIdcomprador(id); // 🔹 Guardamos el ID generado en el objeto
+                return id;
+            }
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al crear comprador: " + ex.getMessage());
+    }
+    return -1;
+}
+ */  
 
     public void actualizar(Comprador c) throws SQLException {
         String sql = "UPDATE comprador SET dni=?, nombre=?, fecha_nac=?, contraseña=?, email=? WHERE id_comprador=?";
