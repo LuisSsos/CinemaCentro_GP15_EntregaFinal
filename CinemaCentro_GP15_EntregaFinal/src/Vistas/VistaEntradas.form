@@ -259,6 +259,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_nombre_cliente">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_dni_cliente">
           <Properties>
@@ -266,6 +269,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_dni_cliente">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_titulo_pelicula">
           <Properties>
@@ -282,6 +288,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_nombre_pelicula">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_funcion">
           <Properties>
@@ -289,6 +298,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_funcion">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_idioma">
           <Properties>
@@ -296,6 +308,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_idioma">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_sala">
           <Properties>
@@ -303,6 +318,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_sala">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_fila">
           <Properties>
@@ -310,6 +328,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_fila">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_asiento">
           <Properties>
@@ -317,6 +338,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_asiento">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btn_imprimir">
           <Properties>
@@ -348,6 +372,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_formato">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

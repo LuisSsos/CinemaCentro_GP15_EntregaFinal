@@ -125,19 +125,21 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
     }
 
     private void reglasHabilitacion() {
-        boolean haySeleccion = tb_tabla.getSelectedRow() >= 0 && seleccionadaOriginal != null;
+        boolean haySeleccion = hayFuncionSeleccionada();
 
         boolean peliculaElegida = cb_pelicula.getSelectedIndex() > 0;
-        boolean salaElegida = cb_sala.getSelectedIndex() >= 0;
-        boolean fechaElegida = dc_fecha_inicio.getDate() != null;
-        boolean horaElegida = cb_hora_inicio.getSelectedIndex() >= 0;
-        boolean idiomaElegido = cb_idioma.getSelectedIndex() >= 0;
+        boolean salaElegida     = cb_sala.getSelectedIndex() >= 0;
+        boolean fechaElegida    = dc_fecha_inicio.getDate() != null;
+        boolean horaElegida     = cb_hora_inicio.getSelectedIndex() >= 0;
+        boolean idiomaElegido   = cb_idioma.getSelectedIndex() >= 0;
+
+        boolean datosCompletos = peliculaElegida && salaElegida && fechaElegida && horaElegida && idiomaElegido;
+        boolean hayCambios     = haySeleccion && datosCompletos && hayCambiosRespectoOriginal();
 
         btn_nuevo.setEnabled(true);
-        boolean datosCompletos = peliculaElegida && salaElegida && fechaElegida && horaElegida && idiomaElegido;
         btn_guardar.setEnabled(datosCompletos && !haySeleccion);
-        btn_actualizar.setEnabled(datosCompletos && haySeleccion);
-        btn_eliminar.setEnabled(haySeleccion);
+        btn_actualizar.setEnabled(hayCambios);
+        btn_eliminar.setEnabled(haySeleccion);  
     }
 
     private void cargarPeliculasFiltro() {
@@ -279,6 +281,48 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
         LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
         txt_fecha_fin.setText(fin.toLocalDate().toString());
         txt_hora_fin.setText(fin.toLocalTime().withSecond(0).withNano(0).toString());
+    }
+    
+    private boolean hayFuncionSeleccionada() {
+    return seleccionadaOriginal != null && tb_tabla.getSelectedRow() >= 0;
+}
+
+    private boolean hayCambiosRespectoOriginal() {
+        if (!hayFuncionSeleccionada()) {
+            return false;
+        }
+
+        int idPeliOriginal = seleccionadaOriginal.getIdpelicula();
+        int nroSalaOriginal = seleccionadaOriginal.getNrosala();
+        LocalDateTime iniOriginal = convertirALocalDateTime(seleccionadaOriginal.getHorainicio());
+        LocalDate fechaOriginal = iniOriginal.toLocalDate();
+        LocalTime horaOriginal = iniOriginal.toLocalTime().withSecond(0).withNano(0);
+        String idiomaOriginal = seleccionadaOriginal.getIdioma();
+
+        String tituloActual = (String) cb_pelicula.getSelectedItem();
+        Pelicula peliActual = buscarPeliculaPorTitulo(tituloActual);
+        int idPeliActual = (peliActual != null ? peliActual.getIdPelicula() : -1);
+
+        Sala salaActual = getSalaSeleccionada();
+        int nroSalaActual = (salaActual != null ? salaActual.getNroSala() : -1);
+
+        LocalDateTime iniActual = getInicioDesdeUI();
+        if (iniActual == null) {
+            return false;
+        }
+        LocalDate fechaActual = iniActual.toLocalDate();
+        LocalTime horaActual = iniActual.toLocalTime().withSecond(0).withNano(0);
+
+        Object idiomaSel = cb_idioma.getSelectedItem();
+        String idiomaActual = (idiomaSel != null ? idiomaSel.toString() : null);
+
+        boolean cambioPelicula = (idPeliActual != idPeliOriginal);
+        boolean cambioSala     = (nroSalaActual != nroSalaOriginal);
+        boolean cambioFecha    = !fechaActual.equals(fechaOriginal);
+        boolean cambioHora     = !horaActual.equals(horaOriginal);
+        boolean cambioIdioma   = (idiomaActual != null && !idiomaActual.equals(idiomaOriginal));
+
+        return cambioPelicula || cambioSala || cambioFecha || cambioHora || cambioIdioma;
     }
 
     private void setFormulario(Funcion f) {
@@ -700,11 +744,10 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
             LocalDateTime ini = getInicioDesdeUI();
             LocalDateTime fin = ini.plusHours(2).plusMinutes(50);
 
-            if (funcionDao.existeSolapado(f.getNrosala(), ini, fin)) {
+            if (funcionDao.existeSolapadoExcepto(f.getIdfuncion(), f.getNrosala(), ini, fin)) {
                 msg("Ya existe una funcion en ese horario para la sala seleccionada");
                 return;
             }
-
             funcionDao.actualizar(f);
             msg("Funcion actualizada");
             cargarTablaSegunFiltro();

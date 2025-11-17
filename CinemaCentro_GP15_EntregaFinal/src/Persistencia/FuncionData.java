@@ -126,6 +126,27 @@ public class FuncionData {
             try (ResultSet rs = ps.executeQuery()) { rs.next(); return rs.getInt(1) > 0; }
         }
     }
+    
+    public boolean existeSolapadoExcepto(int idFuncionExcluir,
+                                     int nroSala,
+                                     LocalDateTime ini,
+                                     LocalDateTime fin) throws SQLException {
+    String sql = "SELECT COUNT(*) FROM funcion " +
+                 "WHERE nro_sala = ? " +
+                 "  AND id_funcion <> ? " +
+                 "  AND (? < hora_fin) " +
+                 "  AND (? > hora_inicio)";
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, nroSala);
+        ps.setInt(2, idFuncionExcluir);
+        ps.setTimestamp(3, Timestamp.valueOf(ini));
+        ps.setTimestamp(4, Timestamp.valueOf(fin));
+        try (ResultSet rs = ps.executeQuery()) {
+            rs.next();
+            return rs.getInt(1) > 0;
+        }
+    }
+}
 
     public void generarAsientos(int idFuncion, List<String> filas, int porFila) throws SQLException {
         String sql = "INSERT INTO asiento(id_funcion, fila, numero, estado) VALUES(?,?,?,1)";

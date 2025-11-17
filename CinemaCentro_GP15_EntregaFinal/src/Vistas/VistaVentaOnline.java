@@ -241,7 +241,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         for (javax.swing.JToggleButton b : listaAsientos) {
             b.setEnabled(false);
             b.setSelected(false);
-            b.setBackground(null); // limpia color previo
+            b.setBackground(null);
         }
 
         String fechaSel = (String) cbFechasDisponibles.getSelectedItem();
@@ -268,7 +268,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             }
 
             if (funcionSeleccionada == null) {
-                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada.");
+                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada");
                 return;
             }
 
@@ -585,20 +585,8 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Email:");
 
-        txtMail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMailActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Contraseña:");
-
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Horarios Disponibles:");
@@ -760,13 +748,13 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTituloCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSelectAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -828,7 +816,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNombreComprador, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -851,9 +839,9 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                     .addComponent(cbFechasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(lblPago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbMedioPago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -870,7 +858,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                     .addComponent(btnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -884,18 +872,18 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             txtDNI.requestFocus();
             return;
         }
-
-        if (dniTexto.length() != 8) {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 dígitos");
-            txtDNI.requestFocus();
-            return;
-        }
-
+        
         int dni;
         try {
             dni = Integer.parseInt(dniTexto);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El DNI solo debe contener números");
+            JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
+            txtDNI.requestFocus();
+            return;
+        }
+
+        if (dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
             txtDNI.requestFocus();
             return;
         }
@@ -903,7 +891,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         try {
             Comprador c = compradorDao.buscarPorDni(dni);
             if (c == null) {
-                JOptionPane.showMessageDialog(this, "No existe un cliente con ese DNI.\nComplete sus datos para registrarse.");
+                JOptionPane.showMessageDialog(this, "No existe un cliente con ese DNI" + "\nComplete sus datos para registrarse");
 
                 compradorActual = null;
 
@@ -929,7 +917,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             if (c.getEmail() == null || c.getEmail().trim().isEmpty()
                     || c.getContraseña() == null || c.getContraseña().trim().isEmpty()) {
 
-                JOptionPane.showMessageDialog(this, "El cliente existe pero no tiene Email o Contraseña registrados.\n" + "Complete los datos y presione Guardar para actualizarlo.");
+                JOptionPane.showMessageDialog(this, "El cliente existe pero no tiene Email o Contraseña registrados" + "\nComplete los datos y presione Guardar para actualizarlo");
 
                 txtMail.setEnabled(true);
                 txtPassword.setEnabled(true);
@@ -958,19 +946,19 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "El cliente ya existe");
             return;
         }
-
+        
         String dniTexto = txtDNI.getText().trim();
-        if (dniTexto.isEmpty() || dniTexto.length() != 8) {
-            JOptionPane.showMessageDialog(this, "Ingrese un DNI valido 8 dígitos");
-            txtDNI.requestFocus();
-            return;
-        }
-
         int dni;
         try {
             dni = Integer.parseInt(dniTexto);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
+            txtDNI.requestFocus();
+            return;
+        }
+
+        if (dniTexto.isEmpty() || dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI valido 8 digitos");
             txtDNI.requestFocus();
             return;
         }
@@ -1005,14 +993,14 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                     compradorActual.setContraseña(contraseña);
                     compradorDao.actualizar(compradorActual);
 
-                    JOptionPane.showMessageDialog(this, "Datos del cliente actualizados correctamente.");
+                    JOptionPane.showMessageDialog(this, "Datos del cliente actualizados correctamente");
 
                     txtMail.setEnabled(false);
                     txtPassword.setEnabled(false);
                     btnAgregarComprador.setEnabled(false);
                     return;
                 } else {
-                    JOptionPane.showMessageDialog(this, "Datos del cliente completos.");
+                    JOptionPane.showMessageDialog(this, "Datos del cliente completos");
                     return;
                 }
             }
@@ -1027,7 +1015,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             compradorDao.crear(nuevo);
             compradorActual = compradorDao.buscarPorDni(dni);
 
-            JOptionPane.showMessageDialog(this, "Cliente registrado correctamente.");
+            JOptionPane.showMessageDialog(this, "Cliente registrado correctamente");
 
             txtNombreComprador.setEnabled(false);
             jDateComprador.setEnabled(false);
@@ -1045,14 +1033,14 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
     private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
         try {
             if (compradorActual == null) {
-                JOptionPane.showMessageDialog(this, "Debe buscar o registrar un cliente antes de confirmar la compra.");
+                JOptionPane.showMessageDialog(this, "Debe buscar o registrar un cliente antes de confirmar la compra");
                 return;
             }
 
             String fechaSel = (String) cbFechasDisponibles.getSelectedItem();
             String horaSel = (String) cbHoras.getSelectedItem();
             if (fechaSel == null || horaSel == null) {
-                JOptionPane.showMessageDialog(this, "Funcion Invalida.");
+                JOptionPane.showMessageDialog(this, "Funcion Invalida");
                 return;
             }
 
@@ -1069,7 +1057,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             }
 
             if (funcionSeleccionada == null) {
-                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada.");
+                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada");
                 return;
             }
 
@@ -1082,7 +1070,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             }
 
             if (asientosSeleccionados.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar al menos un asiento.");
+                JOptionPane.showMessageDialog(this, "Debe seleccionar al menos un asiento");
                 return;
             }
 
@@ -1101,7 +1089,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
 
             int idTicket = ticketDao.crear(ticket);
             if (idTicket <= 0) {
-                JOptionPane.showMessageDialog(this, "No se pudo registrar el ticket.");
+                JOptionPane.showMessageDialog(this, "No se pudo registrar el ticket");
                 return;
             }
 
@@ -1144,14 +1132,6 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
-    private void txtMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMailActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

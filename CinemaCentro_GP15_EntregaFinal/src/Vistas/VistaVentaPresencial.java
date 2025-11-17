@@ -266,7 +266,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             }
 
             if (funcionSeleccionada == null) {
-                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada.");
+                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada");
                 return;
             }
 
@@ -291,10 +291,9 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
                     boton.setEnabled(true);
                     boton.setBackground(java.awt.Color.GREEN);
 
-                    // 🔹 Cuando el usuario lo selecciona → cambia de color
                     boton.addItemListener(e -> {
                         if (boton.isSelected()) {
-                            boton.setBackground(new java.awt.Color(100, 149, 237)); // Azul acero
+                            boton.setBackground(new java.awt.Color(100, 149, 237));
                         } else {
                             boton.setBackground(java.awt.Color.GREEN);
                         }
@@ -856,13 +855,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             txtDNI.requestFocus();
             return;
         }
-
-        if (dniTexto.length() != 8) {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
-            txtDNI.requestFocus();
-            return;
-        }
-
+        
         Integer dni = null;
         try {
             dni = Integer.parseInt(dniTexto);
@@ -872,10 +865,16 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             return;
         }
 
+        if (dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
+            txtDNI.requestFocus();
+            return;
+        }
+
         try {
             Comprador c = compradorDao.buscarPorDni(dni);
             if (c == null) {
-                JOptionPane.showMessageDialog(this, "No existe un cliente con ese DNI.\nComplete los datos para registrarlo.");
+                JOptionPane.showMessageDialog(this, "No existe un cliente con ese DNI" + "\nComplete los datos para registrarlo");
 
                 compradorActual = null;
                 txtNombreComprador.setText("");
@@ -920,18 +919,18 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             txtDNI.requestFocus();
             return;
         }
-
-        if (dniTexto.length() != 8) {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 dígitos");
-            txtDNI.requestFocus();
-            return;
-        }
-
+        
         Integer dni = null;
         try {
             dni = Integer.parseInt(dniTexto);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
+            txtDNI.requestFocus();
+            return;
+        }
+
+        if (dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
             txtDNI.requestFocus();
             return;
         }
@@ -987,14 +986,14 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
     private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
         try {
             if (compradorActual == null) {
-                JOptionPane.showMessageDialog(this, "Debe buscar o registrar un cliente antes de confirmar la compra.");
+                JOptionPane.showMessageDialog(this, "Debe buscar o registrar un cliente antes de confirmar la compra");
                 return;
             }
 
             String fechaSel = (String) cbFechasDisponibles.getSelectedItem();
             String horaSel = (String) cbHoras.getSelectedItem();
             if (fechaSel == null || horaSel == null) {
-                JOptionPane.showMessageDialog(this, "Funcion Invalida.");
+                JOptionPane.showMessageDialog(this, "Funcion Invalida");
                 return;
             }
 
@@ -1011,7 +1010,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             }
 
             if (funcionSeleccionada == null) {
-                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada.");
+                JOptionPane.showMessageDialog(this, "No se encontro la funcion seleccionada");
                 return;
             }
 
@@ -1024,7 +1023,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
             }
 
             if (asientosSeleccionados.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar al menos un asiento.");
+                JOptionPane.showMessageDialog(this, "Debe seleccionar al menos un asiento");
                 return;
             }
 
@@ -1043,7 +1042,7 @@ public class VistaVentaPresencial extends javax.swing.JInternalFrame {
 
             int idTicket = ticketDao.crear(ticket);
             if (idTicket <= 0) {
-                JOptionPane.showMessageDialog(this, "No se pudo registrar el ticket.");
+                JOptionPane.showMessageDialog(this, "No se pudo registrar el ticket");
                 return;
             }
 

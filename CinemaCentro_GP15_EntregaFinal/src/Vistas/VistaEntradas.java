@@ -242,7 +242,11 @@ public class VistaEntradas extends javax.swing.JInternalFrame {
 
         lb_nombre_cliente.setText("Nombre:");
 
+        txt_nombre_cliente.setEditable(false);
+
         lb_dni_cliente.setText("DNI:");
+
+        txt_dni_cliente.setEditable(false);
 
         lb_titulo_pelicula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lb_titulo_pelicula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -250,15 +254,27 @@ public class VistaEntradas extends javax.swing.JInternalFrame {
 
         lb_nombre_pelicula.setText("Nombre:");
 
+        txt_nombre_pelicula.setEditable(false);
+
         lb_funcion.setText("Funcion:");
+
+        txt_funcion.setEditable(false);
 
         lb_idioma.setText("Idioma:");
 
+        txt_idioma.setEditable(false);
+
         lb_sala.setText("Sala:");
+
+        txt_sala.setEditable(false);
 
         lb_fila.setText("Fila:");
 
+        txt_fila.setEditable(false);
+
         lb_asiento.setText("Asiento:");
+
+        txt_asiento.setEditable(false);
 
         btn_imprimir.setText("Imprimir");
         btn_imprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -282,6 +298,8 @@ public class VistaEntradas extends javax.swing.JInternalFrame {
         });
 
         lb_formato.setText("Formato:");
+
+        txt_formato.setEditable(false);
 
         javax.swing.GroupLayout pnl_entradasLayout = new javax.swing.GroupLayout(pnl_entradas);
         pnl_entradas.setLayout(pnl_entradasLayout);
@@ -432,18 +450,18 @@ public class VistaEntradas extends javax.swing.JInternalFrame {
             txt_buscar_dni.requestFocus();
             return;
         }
-
-        if (dniTexto.length() != 8) {
-            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
-            txt_buscar_dni.requestFocus();
-            return;
-        }
-
+        
         int dni;
         try {
             dni = Integer.parseInt(dniTexto);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
+            txt_buscar_dni.requestFocus();
+            return;
+        }
+
+        if (dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener 8 digitos");
             txt_buscar_dni.requestFocus();
             return;
         }
