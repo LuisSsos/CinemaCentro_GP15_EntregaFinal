@@ -582,6 +582,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
 
         E6.setText("E6");
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Email:");
 
         txtMail.addActionListener(new java.awt.event.ActionListener() {
@@ -590,6 +591,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Contraseña:");
 
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -598,6 +600,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Horarios Disponibles:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -867,7 +870,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
                     .addComponent(btnCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
