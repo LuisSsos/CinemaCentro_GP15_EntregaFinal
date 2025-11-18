@@ -1,4 +1,3 @@
-
 package Vistas;
 
 import Modelo.Asiento;
@@ -25,7 +24,6 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 public class VistaVentaOnline extends javax.swing.JInternalFrame {
 
@@ -872,7 +870,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             txtDNI.requestFocus();
             return;
         }
-        
+
         int dni;
         try {
             dni = Integer.parseInt(dniTexto);
@@ -942,23 +940,18 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarCompradorActionPerformed
 
     private void btnAgregarCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCompradorActionPerformed
-        if (compradorActual != null) {
-            JOptionPane.showMessageDialog(this, "El cliente ya existe");
+        String dniTexto = txtDNI.getText().trim();
+        if (dniTexto.isEmpty() || dniTexto.length() != 8) {
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI valido de 8 digitos");
+            txtDNI.requestFocus();
             return;
         }
-        
-        String dniTexto = txtDNI.getText().trim();
+
         int dni;
         try {
             dni = Integer.parseInt(dniTexto);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El DNI solo debe contener numeros");
-            txtDNI.requestFocus();
-            return;
-        }
-
-        if (dniTexto.isEmpty() || dniTexto.length() != 8) {
-            JOptionPane.showMessageDialog(this, "Ingrese un DNI valido 8 digitos");
             txtDNI.requestFocus();
             return;
         }
@@ -986,23 +979,24 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
 
         try {
             if (compradorActual != null) {
-                if (compradorActual.getEmail() == null || compradorActual.getEmail().trim().isEmpty()
-                        || compradorActual.getContraseña() == null || compradorActual.getContraseña().trim().isEmpty()) {
+                boolean faltanDatos
+                        = compradorActual.getEmail() == null || compradorActual.getEmail().trim().isEmpty()
+                        || compradorActual.getContraseña() == null || compradorActual.getContraseña().trim().isEmpty();
 
+                if (faltanDatos) {
                     compradorActual.setEmail(email);
                     compradorActual.setContraseña(contraseña);
                     compradorDao.actualizar(compradorActual);
 
-                    JOptionPane.showMessageDialog(this, "Datos del cliente actualizados correctamente");
+                    JOptionPane.showMessageDialog(this, "Datos del cliente actualizados correctamente.");
 
                     txtMail.setEnabled(false);
                     txtPassword.setEnabled(false);
                     btnAgregarComprador.setEnabled(false);
-                    return;
                 } else {
-                    JOptionPane.showMessageDialog(this, "Datos del cliente completos");
-                    return;
+                    JOptionPane.showMessageDialog(this, "El cliente ya existe y sus datos están completos.");
                 }
+                return;
             }
 
             Comprador nuevo = new Comprador();
@@ -1015,7 +1009,7 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
             compradorDao.crear(nuevo);
             compradorActual = compradorDao.buscarPorDni(dni);
 
-            JOptionPane.showMessageDialog(this, "Cliente registrado correctamente");
+            JOptionPane.showMessageDialog(this, "Cliente registrado correctamente.");
 
             txtNombreComprador.setEnabled(false);
             jDateComprador.setEnabled(false);
