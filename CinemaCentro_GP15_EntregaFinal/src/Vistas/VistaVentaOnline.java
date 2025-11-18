@@ -24,6 +24,8 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VistaVentaOnline extends javax.swing.JInternalFrame {
 
@@ -340,6 +342,17 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         } catch (NumberFormatException e) {
             txtTotal.setText("");
         }
+    }
+    
+    private boolean validacionEmail(String email) {
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+    
+    private boolean validacionContraseña(String password) {
+        return password != null && password.length() >= 8;
     }
 
     /**
@@ -963,6 +976,18 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
 
         if (nombre.isEmpty() || email.isEmpty() || contraseña.isEmpty() || fechaNac == null) {
             JOptionPane.showMessageDialog(this, "Complete todos los campos requeridos");
+            return;
+        }
+        
+        if (!validacionEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Formato de Email Invalido. Ejemplo: usuario@dominio.com");
+            txtMail.requestFocus();
+            return;
+        }
+       
+        if (!validacionContraseña(contraseña)) {
+            JOptionPane.showMessageDialog(this, "La contraseña debe tener un minimo de 8 caracteres");
+            txtPassword.requestFocus();
             return;
         }
 
