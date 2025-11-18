@@ -497,11 +497,17 @@ public class VistaVentaOnline extends javax.swing.JInternalFrame {
         lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPrecio.setText("Precio Unitario:");
 
+        txtPrecioUnit.setEditable(false);
+
         lblCantidad.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCantidad.setText("Cantidad:");
 
+        txtCantidad.setEditable(false);
+
         lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTotal.setText("Total:");
+
+        txtTotal.setEditable(false);
 
         btnCompra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCompra.setText("Confirmar Compra");

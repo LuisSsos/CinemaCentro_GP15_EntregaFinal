@@ -535,6 +535,9 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrecioUnit">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCantidad">
       <Properties>
@@ -545,6 +548,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCantidad">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTotal">
       <Properties>
@@ -555,6 +561,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtTotal">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnCompra">
       <Properties>
