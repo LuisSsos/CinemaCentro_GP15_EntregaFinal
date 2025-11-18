@@ -34,9 +34,9 @@ public class App extends javax.swing.JFrame {
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jm_gestion = new javax.swing.JMenu();
+        jmi_gestion_salas = new javax.swing.JMenuItem();
         jmi_gestion_peliculas = new javax.swing.JMenuItem();
         jmi_gestion_funciones = new javax.swing.JMenuItem();
-        jmi_gestion_salas = new javax.swing.JMenuItem();
         jm_ventas = new javax.swing.JMenu();
         jmi_venta_presencial = new javax.swing.JMenuItem();
         jmi_venta_online = new javax.swing.JMenuItem();
@@ -61,6 +61,14 @@ public class App extends javax.swing.JFrame {
 
         jm_gestion.setText("Gestion");
 
+        jmi_gestion_salas.setText("Salas");
+        jmi_gestion_salas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_gestion_salasActionPerformed(evt);
+            }
+        });
+        jm_gestion.add(jmi_gestion_salas);
+
         jmi_gestion_peliculas.setText("Peliculas");
         jmi_gestion_peliculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,14 +84,6 @@ public class App extends javax.swing.JFrame {
             }
         });
         jm_gestion.add(jmi_gestion_funciones);
-
-        jmi_gestion_salas.setText("Salas");
-        jmi_gestion_salas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_gestion_salasActionPerformed(evt);
-            }
-        });
-        jm_gestion.add(jmi_gestion_salas);
 
         jMenuBar1.add(jm_gestion);
 

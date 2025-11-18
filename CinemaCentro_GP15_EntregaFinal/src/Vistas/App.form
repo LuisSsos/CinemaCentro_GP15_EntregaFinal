@@ -9,6 +9,14 @@
             <Property name="text" type="java.lang.String" value="Gestion"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_salas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Salas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gestion_salasActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_peliculas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Peliculas"/>
@@ -23,14 +31,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gestion_funcionesActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmi_gestion_salas">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Salas"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmi_gestion_salasActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
