@@ -372,7 +372,7 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
 
         LocalDateTime ini = getInicioDesdeUI();
         if (ini == null) {
-            msg("Fecha u hora de inicio inválidas");
+            msg("Fecha u hora de inicio invalidas");
             return null;
         }
         LocalDateTime fin = ini.plusHours(2).plusMinutes(50);

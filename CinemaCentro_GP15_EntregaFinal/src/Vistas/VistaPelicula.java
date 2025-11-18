@@ -31,14 +31,61 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
      */
     public VistaPelicula() {
         initComponents();
+        peliculaData = new PeliculaData();
+
+        txtID.setEditable(true);
+
+        javax.swing.event.DocumentListener listenerTexto = new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                reglasHabilitacion();
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                reglasHabilitacion();
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                reglasHabilitacion();
+            }
+        };
+
+        txtTitulo.getDocument().addDocumentListener(listenerTexto);
+        txtDirector.getDocument().addDocumentListener(listenerTexto);
+        txtActores.getDocument().addDocumentListener(listenerTexto);
+        txtorigen.getDocument().addDocumentListener(listenerTexto);
+
+        cbGenero.addActionListener(e -> reglasHabilitacion());
+        fechaSeleccionada.getDateEditor().addPropertyChangeListener(evt -> {
+            if ("date".equals(evt.getPropertyName())) {
+                reglasHabilitacion();
+            }
+        });
+        rbDisponible.addActionListener(e -> reglasHabilitacion());
+        rbNodisponible.addActionListener(e -> reglasHabilitacion());
+
+        txtID.setText("");
+
+        txtID.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                reglasHabilitacion();
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                reglasHabilitacion();
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                reglasHabilitacion();
+            }
+        });
 
         fechaSeleccionada.setMinSelectableDate(new java.util.GregorianCalendar(2000, Calendar.JANUARY, 1).getTime());
         fechaSeleccionada.setMaxSelectableDate(new java.util.Date());
 
         cbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(
-                new String[]{"Acción", "Comedia", "Drama", "Ciencia Ficción", "Terror", "Romance", "Animación"}
+                new String[]{"Accion", "Comedia", "Drama", "Ciencia Ficcion", "Terror", "Romance", "Animacion"}
         ));
-        peliculaData = new PeliculaData();
+
         configurarTabla();
 
         jtPeliculas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -49,12 +96,13 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
                 }
             }
         });
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Control de Películas");
-        
+        setTitle("Control de Peliculas");
+
         actualizarTabla();
     }
 
@@ -93,6 +141,10 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         bttUpdate = new javax.swing.JButton();
         bttListar = new javax.swing.JButton();
         bttDelete = new javax.swing.JButton();
+        bttLimpiar = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -100,6 +152,8 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("ID");
+
+        txtID.setEditable(false);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Titulo");
@@ -114,7 +168,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         jLabel5.setText("Origen");
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("genero");
+        jLabel6.setText("Genero");
 
         cbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -143,6 +197,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtPeliculas);
 
+        bttAgg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/guardar.png"))); // NOI18N
         bttAgg.setText("Agregar");
         bttAgg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,6 +205,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
             }
         });
 
+        bttBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-magnifying-glass-tilted-right-48.png"))); // NOI18N
         bttBuscar.setText("Buscar");
         bttBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,6 +213,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
             }
         });
 
+        bttUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-aprobar-y-actualizar-48.png"))); // NOI18N
         bttUpdate.setText("Actualizar");
         bttUpdate.setPreferredSize(new java.awt.Dimension(72, 23));
         bttUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -172,11 +229,20 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
             }
         });
 
+        bttDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/eliminar.png"))); // NOI18N
         bttDelete.setText("Eliminar");
         bttDelete.setPreferredSize(new java.awt.Dimension(72, 23));
         bttDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bttDeleteActionPerformed(evt);
+            }
+        });
+
+        bttLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/escoba.png"))); // NOI18N
+        bttLimpiar.setText("Limpiar");
+        bttLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttLimpiarActionPerformed(evt);
             }
         });
 
@@ -189,63 +255,65 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtActores)
-                            .addComponent(txtDirector)
-                            .addComponent(txtTitulo)
-                            .addComponent(txtID)
-                            .addComponent(txtorigen)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(fechaSeleccionada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(rbDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rbNodisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(bttAgg)
-                                .addGap(33, 33, 33)
-                                .addComponent(bttBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(bttUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(bttListar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(bttDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtActores)
+                                    .addComponent(txtDirector)
+                                    .addComponent(txtTitulo)
+                                    .addComponent(txtID)
+                                    .addComponent(txtorigen)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(fechaSeleccionada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(rbDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rbNodisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(cbGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bttAgg, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bttBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bttUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bttListar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bttLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bttDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bttAgg, bttBuscar, bttDelete, bttLimpiar, bttListar});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -272,9 +340,9 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(cbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
-                    .addComponent(fechaSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(fechaSeleccionada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -282,22 +350,25 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
                     .addComponent(rbNodisponible))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bttAgg, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttListar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                    .addComponent(bttAgg, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bttBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bttUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bttListar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bttDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bttLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bttAgg, bttBuscar, bttDelete, bttLimpiar, bttListar, bttUpdate});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bttAggActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttAggActionPerformed
         if (txtTitulo.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El título es obligatorio");
+            JOptionPane.showMessageDialog(this, "El titulo es obligatorio");
             return;
         }
 
@@ -317,7 +388,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         }
 
         if (cbGenero.getSelectedItem() == null || cbGenero.getSelectedItem().toString().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un género");
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un genero");
             return;
         }
 
@@ -327,8 +398,15 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         }
 
         if (!rbDisponible.isSelected() && !rbNodisponible.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Debe indicar si está en cartelera o no");
+            JOptionPane.showMessageDialog(this, "Debe indicar si esta en cartelera o no");
             return;
+        }
+        List<Pelicula> peliculasExistentes = peliculaData.listarPeliculas();
+        for (Pelicula pel : peliculasExistentes) {
+            if (pel.getTitulo().equalsIgnoreCase(txtTitulo.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "Ya existe una película con ese título.");
+                return;
+            }
         }
 
         Pelicula p = new Pelicula();
@@ -343,11 +421,12 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         peliculaData.guardarPelicula(p);
         JOptionPane.showMessageDialog(this, "Pelicula Agregada Correctamente");
         actualizarTabla();
+        limpiarCampos();
     }//GEN-LAST:event_bttAggActionPerformed
 
     private void configurarTabla() {
 
-        String[] columnas = {"ID", "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En Cartelera"};
+        String[] columnas = {"ID", "Titulo", "Director", "Actores", "Origen", "Genero", "Estreno", "En Cartelera"};
 
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
             @Override
@@ -359,8 +438,9 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         jtPeliculas.setModel(modelo);
     }
     private void bttBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttBuscarActionPerformed
+
         if (txtID.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un ID para buscar");
+            JOptionPane.showMessageDialog(this, "Debe ingresar un ID numérico");
             return;
         }
 
@@ -383,10 +463,27 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
             fechaSeleccionada.setDate(p.getEstreno());
             rbDisponible.setSelected(p.isEnCartelera());
             rbNodisponible.setSelected(!p.isEnCartelera());
+
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jtPeliculas.getModel();
+            modelo.setRowCount(0); // Limpia la tabla
+            Object[] fila = {
+                p.getIdPelicula(),
+                p.getTitulo(),
+                p.getDirector(),
+                p.getActores(),
+                p.getOrigen(),
+                p.getGenero(),
+                p.getEstreno(),
+                p.isEnCartelera() ? "Si" : "No"
+            };
+            modelo.addRow(fila);
+
             JOptionPane.showMessageDialog(this, "Película encontrada");
         } else {
             JOptionPane.showMessageDialog(this, "No se encontró película con ese ID");
         }
+
+
     }//GEN-LAST:event_bttBuscarActionPerformed
 
     private void cargarDatosDesdeTabla(int fila) {
@@ -401,7 +498,9 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         fechaSeleccionada.setDate((Date) modelo.getValueAt(fila, 6));
 
         String enCartelera = modelo.getValueAt(fila, 7).toString();
-        rbDisponible.setSelected(enCartelera.equals("Sí"));
+        rbDisponible.setSelected(enCartelera.equals("Si"));
+        habilitarModoEdicion();
+        reglasHabilitacion();
     }
 
     private void bttUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttUpdateActionPerformed
@@ -418,7 +517,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         }
 
         if (txtTitulo.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El título es obligatorio");
+            JOptionPane.showMessageDialog(this, "El titulo es obligatorio");
             return;
         }
 
@@ -438,7 +537,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         }
 
         if (cbGenero.getSelectedItem() == null || cbGenero.getSelectedItem().toString().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un género");
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un genero");
             return;
         }
 
@@ -463,14 +562,15 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         p.setEnCartelera(rbDisponible.isSelected());
 
         peliculaData.actualizarPelicula(p);
-        JOptionPane.showMessageDialog(this, "Película Actualizada Correctamente");
+        JOptionPane.showMessageDialog(this, "Pelicula Actualizada Correctamente");
         actualizarTabla();
+        limpiarCampos();
     }//GEN-LAST:event_bttUpdateActionPerformed
 
     private void actualizarTabla() {
         try {
             javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jtPeliculas.getModel();
-            modelo.setRowCount(0); 
+            modelo.setRowCount(0);
 
             List<Pelicula> peliculas = peliculaData.listarPeliculas();
 
@@ -483,11 +583,10 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
                     p.getOrigen(),
                     p.getGenero(),
                     p.getEstreno(),
-                    p.isEnCartelera() ? "Sí" : "No"
+                    p.isEnCartelera() ? "Si" : "No"
                 };
                 modelo.addRow(fila);
             }
-
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al refrescar la tabla: " + e.getMessage());
@@ -497,7 +596,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
 
     private void bttListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttListarActionPerformed
         actualizarTabla();
-        JOptionPane.showMessageDialog(this, "Lista de películas actualizada");
+        JOptionPane.showMessageDialog(this, "Lista de peliculas actualizada");
     }//GEN-LAST:event_bttListarActionPerformed
 
     private void bttDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttDeleteActionPerformed
@@ -510,25 +609,136 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         try {
             id = Integer.parseInt(txtID.getText().trim());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El ID debe ser un número válido");
+            JOptionPane.showMessageDialog(this, "El ID debe ser un numero válido");
             return;
         }
 
-        int confirmar = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar esta película?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar esta película?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
 
         if (confirmar == JOptionPane.YES_OPTION) {
             peliculaData.eliminarPelicula(id);
-            JOptionPane.showMessageDialog(this, "Película Eliminada Correctamente");
+            JOptionPane.showMessageDialog(this, "Pelicula Eliminada Correctamente");
             actualizarTabla();
+            limpiarCampos();
         }
-        
+
     }//GEN-LAST:event_bttDeleteActionPerformed
+
+    private void limpiarCampos() {
+        txtID.setText("");
+        txtTitulo.setText("");
+        txtDirector.setText("");
+        txtActores.setText("");
+        txtorigen.setText("");
+        cbGenero.setSelectedIndex(0);
+        fechaSeleccionada.setDate(null);
+        rbDisponible.setSelected(false);
+        rbNodisponible.setSelected(false);
+        jtPeliculas.clearSelection();
+        habilitarModoInicial();
+    }
+
+    private void bttLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttLimpiarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_bttLimpiarActionPerformed
+
+    private void habilitarModoInicial() {
+
+        txtID.setEditable(true);
+        txtTitulo.setEditable(true);
+        txtDirector.setEditable(true);
+        txtActores.setEditable(true);
+        txtorigen.setEditable(true);
+        cbGenero.setEnabled(true);
+        fechaSeleccionada.setEnabled(true);
+        rbDisponible.setEnabled(true);
+        rbNodisponible.setEnabled(true);
+
+        bttAgg.setEnabled(true);
+        bttBuscar.setEnabled(true);
+        bttUpdate.setEnabled(false);
+        bttDelete.setEnabled(false);
+        bttListar.setEnabled(true);
+        bttLimpiar.setEnabled(true);
+    }
+
+    private void habilitarModoEdicion() {
+        txtID.setEditable(false);
+        txtTitulo.setEditable(true);
+        txtDirector.setEditable(true);
+        txtActores.setEditable(true);
+        txtorigen.setEditable(true);
+        cbGenero.setEnabled(true);
+        fechaSeleccionada.setEnabled(true);
+        rbDisponible.setEnabled(true);
+        rbNodisponible.setEnabled(true);
+
+        bttAgg.setEnabled(false);
+        bttBuscar.setEnabled(false);
+        bttUpdate.setEnabled(true);
+        bttDelete.setEnabled(true);
+        bttListar.setEnabled(true);
+        bttLimpiar.setEnabled(true);
+    }
+
+    private void reglasHabilitacion() {
+
+        boolean haySeleccion = jtPeliculas.getSelectedRow() >= 0;
+        boolean idIngresado = !txtID.getText().trim().isEmpty() && !txtID.getText().equals("(Auto)");
+        boolean tituloLleno = !txtTitulo.getText().trim().isEmpty();
+        boolean directorLleno = !txtDirector.getText().trim().isEmpty();
+        boolean actoresLleno = !txtActores.getText().trim().isEmpty();
+        boolean origenLleno = !txtorigen.getText().trim().isEmpty();
+        boolean generoElegido = cbGenero.getSelectedIndex() >= 0;
+        boolean fechaElegida = fechaSeleccionada.getDate() != null;
+        boolean carteleraElegida = rbDisponible.isSelected() || rbNodisponible.isSelected();
+
+        boolean datosCompletos = tituloLleno && directorLleno && actoresLleno
+                && origenLleno && generoElegido && fechaElegida && carteleraElegida;
+
+        if (!haySeleccion) {
+            txtID.setEditable(true);
+            txtTitulo.setEditable(true);
+            txtDirector.setEditable(true);
+            txtActores.setEditable(true);
+            txtorigen.setEditable(true);
+            cbGenero.setEnabled(true);
+            fechaSeleccionada.setEnabled(true);
+            rbDisponible.setEnabled(true);
+            rbNodisponible.setEnabled(true);
+
+            bttAgg.setEnabled(datosCompletos);
+            bttBuscar.setEnabled(idIngresado);
+            bttUpdate.setEnabled(false);
+            bttDelete.setEnabled(false);
+            bttLimpiar.setEnabled(true);
+            bttListar.setEnabled(true);
+        } else {
+            txtID.setEditable(false);
+            txtTitulo.setEditable(true);
+            txtDirector.setEditable(true);
+            txtActores.setEditable(true);
+            txtorigen.setEditable(true);
+            cbGenero.setEnabled(true);
+            fechaSeleccionada.setEnabled(true);
+            rbDisponible.setEnabled(true);
+            rbNodisponible.setEnabled(true);
+
+            bttAgg.setEnabled(false);
+            bttBuscar.setEnabled(false);
+            bttUpdate.setEnabled(datosCompletos);
+            bttDelete.setEnabled(true);
+            bttLimpiar.setEnabled(true);
+            bttListar.setEnabled(true);
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bttAgg;
     private javax.swing.JButton bttBuscar;
     private javax.swing.JButton bttDelete;
+    private javax.swing.JButton bttLimpiar;
     private javax.swing.JButton bttListar;
     private javax.swing.JButton bttUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
