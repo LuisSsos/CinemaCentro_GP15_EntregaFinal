@@ -613,7 +613,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
             return;
         }
 
-        int confirmar = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar esta película?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar esta película?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
 
         try {
             peliculaData.eliminarPelicula(id);
