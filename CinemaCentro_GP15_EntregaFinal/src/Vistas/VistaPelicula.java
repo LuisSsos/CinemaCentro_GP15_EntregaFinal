@@ -615,11 +615,25 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
 
         int confirmar = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea eliminar esta película?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
 
-        if (confirmar == JOptionPane.YES_OPTION) {
+        try {
             peliculaData.eliminarPelicula(id);
-            JOptionPane.showMessageDialog(this, "Pelicula Eliminada Correctamente");
+            JOptionPane.showMessageDialog(this, "Película eliminada correctamente");
             actualizarTabla();
             limpiarCampos();
+        } catch (Exception ex) {
+
+            // Detecta error por clave foránea (FK)
+            if (ex.getMessage().toLowerCase().contains("foreign key")) {
+                JOptionPane.showMessageDialog(this,
+                    "No se puede eliminar la película porque está asociada a funciones.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                    "No se pudo eliminar la película:\n" + ex.getMessage(),
+                    "Error SQL",
+                    JOptionPane.ERROR_MESSAGE);
+            }
         }
 
     }//GEN-LAST:event_bttDeleteActionPerformed

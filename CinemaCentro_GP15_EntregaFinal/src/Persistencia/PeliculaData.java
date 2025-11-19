@@ -61,14 +61,17 @@ public class PeliculaData {
         }
     }
 
-    public void eliminarPelicula(int idPelicula) {
-        String sql = "DELETE FROM pelicula WHERE id_pelicula=?";
+    public void eliminarPelicula(int idPelicula) throws SQLException {
+        String sql = "DELETE FROM pelicula WHERE id_pelicula = ?";
+
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPelicula);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar: " + e.getMessage());
-            e.printStackTrace();
+
+            int filas = ps.executeUpdate();
+
+            if (filas == 0) {
+                throw new SQLException("No existe una película con ese ID.");
+            }
         }
     }
 

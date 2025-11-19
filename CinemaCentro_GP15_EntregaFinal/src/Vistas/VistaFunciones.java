@@ -776,7 +776,7 @@ public class VistaFunciones extends javax.swing.JInternalFrame {
             cargarTablaSegunFiltro();
             limpiarFormulario();
         } catch (Exception e) {
-            error(e);
+            JOptionPane.showMessageDialog(this, "No se puede eliminar la funcion por que hay entradas vendidas");
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
