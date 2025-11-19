@@ -609,7 +609,7 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
         try {
             id = Integer.parseInt(txtID.getText().trim());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El ID debe ser un numero válido");
+            JOptionPane.showMessageDialog(this, "El ID debe ser un numero valido");
             return;
         }
 
@@ -617,20 +617,18 @@ public class VistaPelicula extends javax.swing.JInternalFrame {
 
         try {
             peliculaData.eliminarPelicula(id);
-            JOptionPane.showMessageDialog(this, "Película eliminada correctamente");
+            JOptionPane.showMessageDialog(this, "Pelicula eliminada correctamente");
             actualizarTabla();
             limpiarCampos();
         } catch (Exception ex) {
-
-            // Detecta error por clave foránea (FK)
             if (ex.getMessage().toLowerCase().contains("foreign key")) {
                 JOptionPane.showMessageDialog(this,
-                    "No se puede eliminar la película porque está asociada a funciones.",
+                    "No se puede eliminar la pelicula porque esta asociada a funciones",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this,
-                    "No se pudo eliminar la película:\n" + ex.getMessage(),
+                    "No se pudo eliminar la pelicula:\n" + ex.getMessage(),
                     "Error SQL",
                     JOptionPane.ERROR_MESSAGE);
             }
